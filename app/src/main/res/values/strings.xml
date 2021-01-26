@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">fihHuda</string>
+    <string name="quran">قرآن</string>
+    <string name="tafseer">تفسير</string>
+    <string name="azkar">أذكار</string>
+    <string name="ahadeeth">أحآديث</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sh_1">الشيخ مشارى العفاسى</string>
+    <string name="sh_2">الشيخ ماهر المعيقلي</string>
+    <string name="sh_3">الشيخ أحــمد العجمى</string>
+    <string name="sh_4"> الشيخ سعد الغامدى</string>
+    <string name="sh_5">الشيخ عبدالرحمن السديسى</string>
+    <string name="sh_6">الشيخ محــمد جـــبريــل</string>
+    <string name="sh_7">الشيخ عبدالــباسط عبدالصمد</string>
+    <string name="sh_8">الشيخ محمد صديق المنشاوى</string>
+    <string name="sh_9">الشيخ فـــــارس عـــباد</string>
+    <string name="sh_10">الشيخ وديــــع اليمني</string>
+    <string name="sh_11">الشيخ مـــحمد الطبلاوى</string>
+    <string name="sh_12">الشيخ أحــمد الحذيفى</string>
+    <string name="sh_13"> الشيخ نــاصر القطامي</string>
+    <string name="sh_14"> الشيخ عبدالله الجهنى</string>
+    <string name="sh_15">الشيخ ياسر الدوسري</string>
+    <string name="sh_16">الشيخ بندر بليلة</string>
+    <string name="sh_17">الشيخ سعود الشريم</string>
+    <string name="sh_18">الشيخ إدريس أبكر</string>
+    <string name="sh_19">الشيخ محمود خليل الحصري</string>
+    <string name="sh_20">الشيخ أحمد خضر الطرابلسي</string>
+
+    ---------------------------
+
+    <string-array name="planets_array">
+        <item>الشيخ فارس عباد</item>
+        <item>الشيخ احمد العجمي</item>
+        <item>الشيخ ياسر الدوسري</item>
+        <item>الشيخ فارس عباد</item>
+        <item>الشيخ احمد العجمي</item>
+        <item>الشيخ ياسر الدوسري</item>
+        <item>الشيخ فارس عباد</item>
+        <item>الشيخ احمد العجمي</item>
+        <item>الشيخ ياسر الدوسري</item>
+        <item>الشيخ فارس عباد</item>
+        <item>الشيخ احمد العجمي</item>
+        <item>الشيخ ياسر الدوسري</item>
+    </string-array>
+
+
+
+</resources>

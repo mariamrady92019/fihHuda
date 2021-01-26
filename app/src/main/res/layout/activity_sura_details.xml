@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Ayas_WithPagesRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/seekBar"
+        app:layout_constraintEnd_toEndOf="@id/seekBar"
+        app:layout_constraintBottom_toTopOf="@id/seekBar"
+        android:text="jbhcuiuolj"
+        />
+
+   <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        />
+    <ImageView
+        android:id="@+id/playSound"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/seekBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/play"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+         android:layout_marginLeft="@dimen/_10sdp"
+/>
+
+    <ProgressBar
+        android:id="@+id/progressBar_cyclic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

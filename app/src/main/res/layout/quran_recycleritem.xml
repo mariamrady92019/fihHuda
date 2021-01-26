@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+    <ImageView
+        android:id="@+id/shape"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/shape"
+        android:adjustViewBounds="true"
+        />
+    <TextView
+        android:id="@+id/surah_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/shape"
+        app:layout_constraintEnd_toEndOf="@id/shape"
+        app:layout_constraintTop_toTopOf="@id/shape"
+        app:layout_constraintBottom_toBottomOf="@id/shape"
+        android:text="5"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/colorAccent"
+        />
+    <TextView
+        android:id="@+id/surah_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/shape"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/shape"
+        android:text="سورة البقرة"
+        android:fontFamily="@font/bukraregular"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/_12ssp"
+        android:layout_margin="5dp"
+        />
+    <TextView
+        android:id="@+id/surah_identitiy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/surah_name"
+        android:text="مكية"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+
+        />
+    <TextView
+        android:id="@+id/fasel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/surah_identitiy"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        android:text="|"
+        android:textSize="@dimen/_25ssp"
+        android:textColor="@color/colorPrimaryDark"
+       android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        />
+    <TextView
+        android:id="@+id/surah_AyasNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/fasel"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:text="122"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textColor="@color/colorAccent"
+
+        />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/surah_AyasNumber"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:text="آيات"
+        android:textSize="@dimen/_10ssp"
+
+        android:textColor="@color/colorAccent"
+
+        />
+
+
+    <ImageView
+        android:id="@+id/qraah_icon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/quran"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+         />
+    <TextView
+        android:id="@+id/fasel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/qraah_icon"
+        app:layout_constraintTop_toTopOf="@id/qraah_icon"
+        android:text="|"
+        android:textSize="@dimen/_30ssp"
+           android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_10sdp"
+        />
+
+    <ImageView
+        android:id="@+id/listen_icon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/listen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fasel2"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_6sdp"
+
+         />
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_15sdp"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

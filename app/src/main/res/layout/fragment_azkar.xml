@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".azkar.AzkarFragment"
+
+
+    >
+
+
+
+   <!-- <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+      !-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimaryDark"
+
+        >
+        <TextView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+           android:text="الأذكار .."
+           android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/bukraregular"
+            android:padding="5dp"
+            android:textSize="@dimen/_17sdp"
+
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+     android:layout_marginTop="@dimen/_10sdp"
+    android:id="@+id/first"
+    android:background="@drawable/azkar_item"
+
+    >
+
+    <ImageView
+        android:id="@+id/azkar_image1"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/azkar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/azkar_image1"
+        android:text="أذكار الصباح"
+       android:fontFamily="@font/bukraregular"
+        app:layout_constraintTop_toTopOf="@id/azkar_image1"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="@dimen/_10sdp"
+
+
+        />
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:layout_constraintTop_toBottomOf="@id/azkar_image1"
+        android:layout_marginTop="@dimen/_5sdp"
+
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/first"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+       android:id="@+id/second"
+        android:background="@drawable/azkar_item"
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image2"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image2"
+            android:text="أذكار المساء"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image2"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image2"
+            android:layout_marginTop="@dimen/_5sdp"
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/second"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/third"
+        android:background="@drawable/azkar_item"
+
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image3"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image3"
+            android:text="أذكار الإستيقاظ"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image3"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image3"
+            android:layout_marginTop="@dimen/_5sdp"
+
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/third"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/fourth"
+        android:background="@drawable/azkar_item"
+
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image4"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image4"
+            android:text="أذكار المسجد"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image4"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image4"
+            android:layout_marginTop="@dimen/_5sdp"
+
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fourth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/fifth"
+        android:background="@drawable/azkar_item"
+
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image5"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image5"
+            android:text="أذكار النوم والاحلام"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image5"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image5"
+            android:layout_marginTop="@dimen/_5sdp"
+
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fifth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/sexth"
+        android:background="@drawable/azkar_item"
+
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image6"
+            android:text="أذكار الأذان"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image6"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image6"
+            android:layout_marginTop="@dimen/_9sdp"
+
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sexth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/seven"
+        android:background="@drawable/azkar_item"
+
+        >
+
+        <ImageView
+            android:id="@+id/azkar_image7"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/azkar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/azkar_image7"
+            android:text="أذكار متفرقة"
+            android:fontFamily="@font/bukraregular"
+            app:layout_constraintTop_toTopOf="@id/azkar_image7"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@id/azkar_image7"
+            android:layout_marginTop="@dimen/_5sdp"
+
+
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+

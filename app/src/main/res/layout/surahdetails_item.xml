@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+      >
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ifttah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+              android:id="@+id/surah_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bukraregular"
+            android:text="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيم"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_13ssp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.54"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.484" />
+
+        <!--
+        <TextView
+            android:id="@+id/safhanum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":حزب رقم"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/pageNumber_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/whiteborder"
+            android:text="45"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/safhanum"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/gza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="جزءرقم :"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/guzaNumber_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/whiteborder"
+            android:text="45"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/gza"
+            app:layout_constraintTop_toTopOf="parent" />
+            -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scrol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ifttah"
+        android:layout_marginBottom="@dimen/_15sdp"
+        >
+
+
+        <TextView
+            android:id="@+id/ayaText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quran"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/_6sdp"
+            android:text="بسم الله الرحمن الرحيم"
+            android:textAlignment="center"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="10dp"
+            />
+
+    </ScrollView>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
