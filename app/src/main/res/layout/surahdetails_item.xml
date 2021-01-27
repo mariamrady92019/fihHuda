@@ -10,6 +10,7 @@
 
 
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ifttah"
         android:layout_width="match_parent"
@@ -84,37 +85,51 @@
             -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toBottomOf="@id/ifttah"
+    android:layout_marginTop="@dimen/_5sdp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
     <ScrollView
         android:id="@+id/scrol"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ifttah"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
         >
 
 
-        <TextView
+    <TextView
             android:id="@+id/ayaText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fontFamily="@font/quran"
             android:gravity="center_horizontal"
-            android:padding="@dimen/_6sdp"
+            android:padding="@dimen/_4sdp"
             android:text="بسم الله الرحمن الرحيم"
             android:textAlignment="center"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_18ssp"
+            android:lineSpacingExtra="@dimen/_5sdp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ifttah"
             android:textColor="@color/colorAccent"
             android:layout_marginTop="@dimen/_7sdp"
             android:layout_marginBottom="10dp"
+        android:enabled="true"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true"
             />
-
     </ScrollView>
+
+</LinearLayout>
+
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

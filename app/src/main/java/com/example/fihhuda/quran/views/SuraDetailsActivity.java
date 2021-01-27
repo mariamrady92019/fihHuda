@@ -229,7 +229,7 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
         playSound.setOnClickListener(SuraDetailsActivity.this);
         progressBarCyclic = (ProgressBar) findViewById(R.id.progressBar_cyclic);
         progressBarCyclic.setVisibility(View.VISIBLE);
-        textView = (TextView) findViewById(R.id.textView);
+       // textView = (TextView) findViewById(R.id.textView);
 
 
     }
