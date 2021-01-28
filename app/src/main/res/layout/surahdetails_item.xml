@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EAE6DD"
 
-      >
+
+    >
 
 
 
@@ -109,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/quran"
-            android:gravity="center_horizontal"
+             android:gravity="center_horizontal"
             android:padding="@dimen/_4sdp"
             android:text="بسم الله الرحمن الرحيم"
             android:textAlignment="center"
@@ -125,6 +127,7 @@
         android:textIsSelectable="true"
         android:focusable="true"
         android:longClickable="true"
+
             />
     </ScrollView>
 

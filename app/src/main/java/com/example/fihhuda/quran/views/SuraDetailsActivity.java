@@ -79,14 +79,18 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
         initRecycler(surahAyat);
 
         String[] splitStr = surahName.split("\\s+");
+        String soraRenamed=reName(splitStr[1]);
+        Log.e("name",soraRenamed);
 
-        getListeningData(readerId, splitStr[1]);
+        Log.e("splitted",splitStr[1]);
+
+        getListeningData(readerId, soraRenamed);
         progressBarCyclic.setVisibility(View.VISIBLE);
         playSound.setVisibility(View.GONE);
         seekBar.setVisibility(View.GONE);
 
         observeDataFromViewMOdel();
-        final Handler handler = new Handler(Looper.getMainLooper());
+     /*   final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -98,7 +102,7 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
             }}
         }, 2500);
 
-
+**/
         /**   List<Ayah> sora = new ArrayList<>();
         sora = QuranFragment.viewModel.fullQuran.getValue().getData().getSurahs()
                 .get(position).getAyahs();
@@ -117,6 +121,24 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
       **/
     }
 
+
+    public String reName(String name){
+        String rename = name;
+        if(name.equals("هود")){
+            rename="هٌود";
+        }else if (name.equals("الشرح")){
+            rename="الإنشراح";
+        }else if(name.equals("العلق")){
+            rename="العًلق";
+        }else if(name.equals("ابراهيم")){
+            rename="إبراهيم";
+        }else if(name.equals("النبإ")){
+            rename="النبأ";
+        }else if(name.equals("الانسان")){
+            rename="الإنسان";
+        }
+return rename;
+    }
 
 
     //call function connected to api from view model .. in view model the function called from rebo
@@ -229,7 +251,7 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
         playSound.setOnClickListener(SuraDetailsActivity.this);
         progressBarCyclic = (ProgressBar) findViewById(R.id.progressBar_cyclic);
         progressBarCyclic.setVisibility(View.VISIBLE);
-       // textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
 
 
     }
@@ -257,8 +279,10 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
 
-        String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
-       //لو انا شغلت سورة وخرجت م الاكتفتفي وروحت اشغل واحده جديده لازم اقفل اللي شغاله الاول عشان كده بشوف الزرار شغال ولا لا
+       //String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
+       String url=audioUrl;
+        //لو انا شغلت سورة وخرجت م الاكتفتفي وروحت اشغل واحده جديده لازم اقفل اللي شغاله الاول عشان
+        // كده بشوف الزرار شغال ولا لا
         // لانه
         // لو شغال يبقي انا ف نفس الاكتفتي فاوقفه عادي انما لو مش فيها هعمل الاتنين كونديشن الاولانيين
         if(Helper.mediaPlayer!=null&&buttonPlayed==0){

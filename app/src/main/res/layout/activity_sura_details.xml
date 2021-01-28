@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#EAE6DD"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Ayas_WithPagesRecycler"
@@ -16,7 +18,15 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/seekBar"
+        app:layout_constraintEnd_toEndOf="@id/seekBar"
+        app:layout_constraintBottom_toTopOf="@id/seekBar"
+        android:text="jbhcuiuolj"
+        />
 
 
 
@@ -28,7 +38,9 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
+       android:layout_marginTop="@dimen/_5sdp"
         />
+
     <ImageView
         android:id="@+id/playSound"
         android:layout_width="@dimen/_30sdp"
@@ -41,6 +53,7 @@
         android:layout_marginBottom="@dimen/_3sdp"
         android:layout_marginStart="@dimen/_15sdp"
          android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
 />
     <ProgressBar
         android:id="@+id/progressBar_cyclic"
