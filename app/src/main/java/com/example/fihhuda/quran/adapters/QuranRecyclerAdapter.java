@@ -1,5 +1,6 @@
 package com.example.fihhuda.quran.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import com.example.fihhuda.quran.fullQuranReadingModels.Surah;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class QuranRecyclerAdapter extends
         RecyclerView.Adapter<QuranRecyclerAdapter.QuranViewHolder>{
 
     List<Surah> surasList = new ArrayList<>();
-    OnItemClickListener onItemClickListener;
+    OnClickListener onClickListener;
 
 
     public QuranRecyclerAdapter(List<Surah> surasList) {
@@ -47,15 +50,22 @@ public class QuranRecyclerAdapter extends
             holder.surahIdentitiy.setText("مكية");
         }
         holder.surahAyasNumber.setText(surah.getAyahs().size()+"");
-        holder.qraahIcon.setVisibility(View.GONE);
+//       holder.qraahIcon.setVisibility(View.GONE);
 
-        if (onItemClickListener!=null){
-         holder.itemView.setOnClickListener(new View.OnClickListener() {
+        if (onClickListener !=null){
+         holder.eqraaLayout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-             onItemClickListener.onItemClick(position);
+             onClickListener.onItemClick(position);
              }
          });
+         holder.listenIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickListener.onEqraaButtonClicked(position);
+                    Log.e("e", "onClick: button clicked");
+                }
+            });
         }
 
     }
@@ -67,18 +77,22 @@ public class QuranRecyclerAdapter extends
     }
 
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
-    public interface OnItemClickListener{
+
+
+
+    public interface OnClickListener {
         void onItemClick(int pos);
+        void onEqraaButtonClicked(int pos);
     }
 
 
     class QuranViewHolder extends RecyclerView.ViewHolder {
 
-
+       protected  View eqraaLayout ;
         protected TextView surahNumber;
         protected TextView surahName;
         protected TextView surahIdentitiy;
@@ -88,12 +102,17 @@ public class QuranRecyclerAdapter extends
 
         public QuranViewHolder(@NonNull View rootView) {
             super(rootView);
-           surahNumber = (TextView) rootView.findViewById(R.id.surah_number);
+            eqraaLayout= (View) rootView.findViewById(R.id.eqraa_layout);
+
+            surahNumber = (TextView) rootView.findViewById(R.id.surah_number);
             surahName = (TextView) rootView.findViewById(R.id.surah_name);
             surahIdentitiy = (TextView) rootView.findViewById(R.id.surah_identitiy);
             surahAyasNumber = (TextView) rootView.findViewById(R.id.surah_AyasNumber);
-            qraahIcon = (ImageView) rootView.findViewById(R.id.qraah_icon);
+           // qraahIcon = (ImageView) rootView.findViewById(R.id.qraah_icon);
             listenIcon = (ImageView) rootView.findViewById(R.id.listen_icon);
         }
     }
+
+
+
 }

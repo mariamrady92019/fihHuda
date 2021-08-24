@@ -3,15 +3,17 @@
     package="com.example.fihhuda">
 
     <application
-      android:usesCleartextTraffic="true"
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen2">
-        <activity android:name=".azkar.AzkarActivity"></activity>
+        android:name=".Base.ApplicationClass"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen2"
+
+        android:usesCleartextTraffic="true">
+        <activity android:name=".azkar.views.AzkarDetailsActivity"></activity>
+        <activity android:name=".quran.views.ListenDetailsActivity" />
         <activity android:name=".quran.views.SuraDetailsActivity" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".SplahActivity">
@@ -21,7 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".Base.ListeningService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+
 
     <uses-permission android:name="android.permission.INTERNET" />
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,6 +8,17 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     >
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/eqraa_layout"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintWidth_percent="0.6"
+          >
+
     <ImageView
         android:id="@+id/shape"
         android:layout_width="0dp"
@@ -107,7 +119,7 @@
         />
 
 
-    <ImageView
+ <!-- <ImageView
         android:id="@+id/qraah_icon"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_40sdp"
@@ -119,31 +131,37 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_3sdp"
-         />
+         />-->
+
+
+
     <TextView
         android:id="@+id/fasel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/qraah_icon"
-        app:layout_constraintTop_toTopOf="@id/qraah_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:text="|"
         android:textSize="@dimen/_30ssp"
            android:textColor="@color/white"
         android:layout_marginBottom="@dimen/_10sdp"
         />
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/listen_icon"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:adjustViewBounds="true"
         android:src="@drawable/listen"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fasel2"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="parent"
+    />
 
-         />
     <View
 
         android:layout_width="match_parent"

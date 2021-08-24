@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAE6DD"
+    android:background="@color/colorPrimary"
 
 
     >
@@ -112,21 +112,24 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/quran"
              android:gravity="center_horizontal"
-            android:padding="@dimen/_4sdp"
+            android:padding="@dimen/_7sdp"
             android:text="بسم الله الرحمن الرحيم"
             android:textAlignment="center"
-            android:textSize="@dimen/_18ssp"
-            android:lineSpacingExtra="@dimen/_5sdp"
+            android:textSize="@dimen/_17ssp"
+            android:lineSpacingExtra="@dimen/_3sdp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ifttah"
             android:textColor="@color/colorAccent"
             android:layout_marginTop="@dimen/_7sdp"
             android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/_3sdp"
+       android:layout_marginEnd="@dimen/_3sdp"
         android:enabled="true"
-        android:textIsSelectable="true"
-        android:focusable="true"
-        android:longClickable="true"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:longClickable="true"
+             android:justificationMode="inter_word"
 
             />
     </ScrollView>

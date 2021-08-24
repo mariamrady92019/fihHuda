@@ -29,6 +29,8 @@
     <string name="sh_18">الشيخ إدريس أبكر</string>
     <string name="sh_19">الشيخ محمود خليل الحصري</string>
     <string name="sh_20">الشيخ أحمد خضر الطرابلسي</string>
+    <string name="channel_name">channelNotfication</string>
+    <string name="channel_description">show notfication for listening</string>
 
     ---------------------------
 
@@ -46,7 +48,6 @@
         <item>الشيخ احمد العجمي</item>
         <item>الشيخ ياسر الدوسري</item>
     </string-array>
-
 
 
 </resources>

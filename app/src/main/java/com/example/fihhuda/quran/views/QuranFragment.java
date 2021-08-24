@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +27,6 @@ import com.example.fihhuda.quran.fullQuranReadingModels.Surah;
 import com.example.fihhuda.quran.viewsModel.QuranViewModel;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.flipboard.bottomsheet.commons.MenuSheetView;
-import com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +45,7 @@ public class QuranFragment extends Fragment implements View.OnClickListener {
     QuranRecyclerAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     public static QuranViewModel viewModel;
-    String shikh_name="الشيخ مشاري راشد" ;
+    public static String  shikh_name="الشيخ مشاري راشد" ;
     int shikh_id=1;
 
 
@@ -107,7 +104,7 @@ public class QuranFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onItemClick(final List<Surah> list) {
-        adapter.setOnItemClickListener(new QuranRecyclerAdapter.OnItemClickListener() {
+        adapter.setOnClickListener(new QuranRecyclerAdapter.OnClickListener() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = new Intent(
@@ -117,6 +114,17 @@ public class QuranFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("shekh_id", shikh_id);
                 startActivity(intent);
 
+
+            }
+
+            @Override
+            public void onEqraaButtonClicked(int pos) {
+             Intent intent = new Intent(
+                        getContext(), ListenDetailsActivity.class);
+                intent.putExtra("position", pos);
+                intent.putExtra("name", list.get(pos).getName());
+                intent.putExtra("shekh_id", shikh_id);
+                startActivity(intent);
 
             }
         });
@@ -160,6 +168,7 @@ public class QuranFragment extends Fragment implements View.OnClickListener {
                      public boolean onMenuItemClick(MenuItem item) {
                          searchBar.setText(item.getTitle());
                          shikh_name=item.getTitle()+"";
+
                             getShikh_id();
                          Log.e("shekh id :",shikh_id+"");
 

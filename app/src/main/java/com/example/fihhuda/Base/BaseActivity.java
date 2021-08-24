@@ -35,6 +35,24 @@ public class BaseActivity extends AppCompatActivity {
         return builder.show();
     }
 
+    public String reName(String name){
+        String rename = name;
+        if(name.equals("هود")){
+            rename="هٌود";
+        }else if (name.equals("الشرح")){
+            rename="الإنشراح";
+        }else if(name.equals("العلق")){
+            rename="العًلق";
+        }else if(name.equals("ابراهيم")){
+            rename="إبراهيم";
+        }else if(name.equals("النبإ")){
+            rename="النبأ";
+        }else if(name.equals("الانسان")){
+            rename="الإنسان";
+        }
+        return rename;
+    }
+
 
     public AlertDialog showMessage(String message, String posActionName,
                                    DialogInterface.OnClickListener onClickListener,

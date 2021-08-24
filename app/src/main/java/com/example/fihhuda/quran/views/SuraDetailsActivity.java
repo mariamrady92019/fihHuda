@@ -84,10 +84,10 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
 
         Log.e("splitted",splitStr[1]);
 
-        getListeningData(readerId, soraRenamed);
-        progressBarCyclic.setVisibility(View.VISIBLE);
-        playSound.setVisibility(View.GONE);
-        seekBar.setVisibility(View.GONE);
+        //getListeningData(readerId, soraRenamed);
+      //  progressBarCyclic.setVisibility(View.VISIBLE);
+       // playSound.setVisibility(View.GONE);
+       // seekBar.setVisibility(View.GONE);
 
         observeDataFromViewMOdel();
      /*   final Handler handler = new Handler(Looper.getMainLooper());
@@ -122,30 +122,9 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    public String reName(String name){
-        String rename = name;
-        if(name.equals("هود")){
-            rename="هٌود";
-        }else if (name.equals("الشرح")){
-            rename="الإنشراح";
-        }else if(name.equals("العلق")){
-            rename="العًلق";
-        }else if(name.equals("ابراهيم")){
-            rename="إبراهيم";
-        }else if(name.equals("النبإ")){
-            rename="النبأ";
-        }else if(name.equals("الانسان")){
-            rename="الإنسان";
-        }
-return rename;
-    }
 
 
-    //call function connected to api from view model .. in view model the function called from rebo
-    private void getListeningData(int i, String surahName) {
-        viewModel.getListeningDataBId_SuraName(i, surahName);
 
-    }
 
     int num = 0;
     boolean founded = false ;
@@ -246,12 +225,7 @@ return rename;
     private void initView() {
 
         ayasWithPagesRecycler = (RecyclerView) findViewById(R.id.Ayas_WithPagesRecycler);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        playSound = (ImageView) findViewById(R.id.playSound);
-        playSound.setOnClickListener(SuraDetailsActivity.this);
-        progressBarCyclic = (ProgressBar) findViewById(R.id.progressBar_cyclic);
-        progressBarCyclic.setVisibility(View.VISIBLE);
-        textView = (TextView) findViewById(R.id.textView);
+
 
 
     }
@@ -342,6 +316,7 @@ return rename;
 
 
     }
+    
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void playAudioFromApi(String url) {
 
@@ -366,6 +341,7 @@ return rename;
         }
 
     }
+
 
     //seekbar horozintal line timer
     public void updatSeekBarTimer(final MediaPlayer mediaPlayer) {

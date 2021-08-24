@@ -16,7 +16,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
+
+
 }
 
 dependencies {
@@ -29,6 +33,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
+
+
+
 
     //sdp lib and ssp
 
@@ -82,5 +89,8 @@ dependencies {
 
     implementation 'com.flipboard:bottomsheet-core:1.5.3'
     implementation 'com.flipboard:bottomsheet-commons:1.5.3' // optional
+
+     //lifecycle service to use in service with observable
+        implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
 }

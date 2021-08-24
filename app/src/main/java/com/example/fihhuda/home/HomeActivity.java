@@ -1,5 +1,6 @@
 package com.example.fihhuda.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -11,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.fihhuda.azkar.AzkarFragment;
+import com.example.fihhuda.azkar.views.AzkarFragment;
 import com.example.fihhuda.R;
 import com.example.fihhuda.quran.views.QuranFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         };
     }
 
+    @SuppressLint("WrongViewCast")
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);

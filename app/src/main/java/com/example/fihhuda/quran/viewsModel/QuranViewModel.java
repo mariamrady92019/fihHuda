@@ -36,7 +36,7 @@ import java.util.List;
 
 
 public class QuranViewModel extends ViewModel {
-   public static Context context ;
+   public Context context ;
 
     public  MutableLiveData<FullQuran> fullQuran= new MutableLiveData<>();
     public  MutableLiveData<String> message= new MutableLiveData<>();

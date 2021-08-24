@@ -76,7 +76,8 @@ public class ListeningRebosotry {
 
     private void setMutableliveDataList(List<DataItem> list,String uri) {
           this.listOfDataItems.setValue(list);
-          this.uriLink.setValue(uri);
+          //this.uriLink.setValue(uri);
+         this.uriLink.postValue(uri);
     }
 
 
