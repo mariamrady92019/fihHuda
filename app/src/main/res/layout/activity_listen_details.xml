@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".quran.views.ListenDetailsActivity"
+    android:background="@drawable/quranback"
+    >
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@id/text2"
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:text="القارئ/"
+        android:textSize="@dimen/_18sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/bukraregular"
+        android:layout_marginTop="@dimen/_15sdp"
+
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginLeft="@dimen/_20sdp" />
+
+    <TextView
+        android:id="@+id/qareeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@id/text2"
+        app:layout_constraintEnd_toStartOf="@id/text1"
+        android:text="مشاري راشد "
+        android:textSize="@dimen/_20sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/bukraregular"
+        android:layout_marginTop="@dimen/_30sdp"
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="اسم السورة/"
+        android:textSize="@dimen/_18sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/bukraregular"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+
+        />
+    <TextView
+        android:id="@+id/surah_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/text2"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="سورة النساء"
+        android:textSize="@dimen/_18sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/bukraregular"
+        android:layout_marginTop="@dimen/_30sdp"
+
+        />
+    <TextView
+        android:id="@+id/current_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/total"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="0/"
+        android:textSize="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="@color/colorPrimaryDark"
+
+        />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:progressBackgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/total"
+        app:layout_constraintWidth_percent="0.90"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="3.0"
+        android:textSize="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        app:layout_goneMarginEnd="@dimen/_20sdp"
+        android:textColor="@color/colorPrimaryDark"
+
+        />
+
+    <ImageButton
+        android:id="@+id/rew_btn"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/rewbtn"
+        android:scaleType="fitCenter"
+        android:cropToPadding="true"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_goneMarginStart="@dimen/_20sdp"
+        />
+    <ImageView
+        android:id="@+id/play_btn"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/play"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toEndOf="@id/rew_btn"
+        />
+
+    <ImageView
+        android:id="@+id/forwrd_btn"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/forwardbtn"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toEndOf="@id/play_btn"
+        />
+
+
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/play"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toEndOf="@id/rew_btn"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

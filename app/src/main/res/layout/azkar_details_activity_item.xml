@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/scrol"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:textAlignment="center"
+    android:scrollbars="vertical"
+    android:fillViewport="true"
+    app:layout_constraintStart_toStartOf="parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+        <TextView
+        android:id="@+id/zekr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:text="jhjsdbhgbhdcuidfhv"
+        android:textDirection="rtl"
+        android:padding="@dimen/_5sdp"
+        android:textSize="@dimen/_17sdp"
+        android:textIsSelectable="true"
+        android:enabled="true"
+        android:focusable="true"
+        android:longClickable="true"
+        />
+
+    <TextView
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/zekr"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="--------------------------------------------"
+        android:textDirection="rtl"
+        android:padding="@dimen/_2sdp"
+        android:textSize="@dimen/_17sdp"
+        android:gravity="center"
+        />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="jhjsdbhgbhdcuidfhv"
+            android:textDirection="rtl"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_17sdp"
+
+            />
+
+    <TextView
+        android:id="@+id/fadl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/count"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:textDirection="rtl"
+        android:padding="@dimen/_5sdp"
+        android:textSize="@dimen/_15sdp"
+        android:text="flmm kmcknckeeeeeeeen"
+
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
