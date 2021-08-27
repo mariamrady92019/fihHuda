@@ -67,21 +67,23 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
         Log.e("splitted", splitStr[1]);
 
-        getListeningData(readerId, soraRenamed);
-        observeDataFromViewMOdel();
+       // getListeningData(readerId, soraRenamed);
+      //  observeDataFromViewMOdel();
         isplayingimage=false;
+        isPaused=false;
+
           if(ListenSrvicesManager.getInstance()!=null||ListenSrvicesManager.getInstance().isPlaying()){
 
             stopService(new Intent(this,ListeningService.class));
              // ListenSrvicesManager.getInstance().stop();
              ListenSrvicesManager.getInstance().release();
-              ListenSrvicesManager.mediaPlayer=null;
-
+             ListenSrvicesManager.setMediaPlayerNull();
               sTime=0;
               eTime=0;
           }
-        observePreparationDone();
-       // observeComplitionDone();
+       ListeningViewModel.preparedDone.setValue("");
+       observePreparationDone();
+       //observeComplitionDone();
         //observeDestroyedDone();
     }
 
@@ -89,49 +91,71 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.rew_btn) {
+            playBtn.setImageResource(R.drawable.play);
+            progressCircular.setVisibility(View.VISIBLE);
             position = position - 1;
-            startNewSuraByButton(position);
+            Intent intent = new Intent(this, ListeningService.class);
+           // intent.putExtra("url",audioUrl);
+            intent.putExtra("position",position);
+            startService(intent); 
+            //startNewSuraByButton(position);
         }
+
         else if (view.getId() == R.id.play_btn) {
 
-            //مش شغال
-            if (isplayingimage==false) {
-                //play after pause
-                       if(isPaused == true){
+                  //مش شغال
+                  if (isplayingimage==false) {
+                      //play after pause
+                      if(isPaused == true){
 
-                           ListenSrvicesManager.getInstance().seekTo(sTime);
-                           ListenSrvicesManager.getInstance().start();
-                           isPaused=false;
-                           isplayingimage=true;
-                           playBtn.setImageResource(R.drawable.puase);
-                       }else{
-                 //play
-                           createNotifications();
-                  Intent intent = new Intent(this, ListeningService.class);
-                  intent.putExtra("url",audioUrl);
-                           intent.putExtra("position",position);
-                startService(intent);
-                isplayingimage = true;
-               // progressCircular.setVisibility(View.VISIBLE);
-                        //   playBtn.setImageResource(R.drawable.puase);
+                          ListenSrvicesManager.getInstance().seekTo(sTime);
+                          ListenSrvicesManager.getInstance().start();
+                          isPaused=false;
+                          isplayingimage=true;
+                          playBtn.setImageResource(R.drawable.puase);
+                      }else{
+                          //play
+                          progressCircular.setVisibility(View.VISIBLE);
+                          createNotifications();
+                          Intent intent = new Intent(this, ListeningService.class);
+                          //intent.putExtra("url",audioUrl);
+                          intent.putExtra("position",position);
+                          startService(intent);
+                          isplayingimage = true;
+                         // isPaused=false;
+                          // progressCircular.setVisibility(View.VISIBLE);
+                          // playBtn.setImageResource(R.drawable.puase);
 
-                           //updatSeekBarTimer();
+                          //updatSeekBarTimer();
 
-            }}
-            //\puas
-            else if (isplayingimage==true){
-                ListenSrvicesManager.getInstance().pause();
-                playBtn.setImageResource(R.drawable.play);
-                isplayingimage=false;
-                isPaused= true;
-            }
+                      }}
+                  //\puas
+                  else if (isplayingimage==true){
+                      ListenSrvicesManager.getInstance().pause();
+                      playBtn.setImageResource(R.drawable.play);
+                      isplayingimage=false;
+                      isPaused= true;
+                  }
+
+              }
 
 
 
-        } else if (view.getId() == R.id.forwrd_btn) {
+
+
+        else if (view.getId() == R.id.forwrd_btn) {
+
+            playBtn.setImageResource(R.drawable.play);
+            progressCircular.setVisibility(View.VISIBLE);
             position++;
 
-        startNewSuraByButton(position);}
+        //startNewSuraByButton(position);
+            Intent intent = new Intent(this, ListeningService.class);
+            // intent.putExtra("url",audioUrl);
+            intent.putExtra("position",position);
+            startService(intent);
+
+        }
 
     }
 
@@ -159,7 +183,10 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onChanged(String s) {
                 if(s.contains("done")){
-
+                     playBtn.setImageResource(R.drawable.puase);
+                     progressCircular.setVisibility(View.GONE);
+                     isplayingimage=true;
+                   // viewModel.preparedDone.setValue("");
                     updatSeekBarTimer();
                     //in update fun
                    // progressCircular.setVisibility(View.GONE);
@@ -178,12 +205,13 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         rewBtn = (ImageView) findViewById(R.id.rew_btn);
         rewBtn.setOnClickListener(ListenDetailsActivity.this);
         playBtn = (ImageView) findViewById(R.id.play_btn);
-       // playBtn.setImageResource(R.drawable.play);
+        playBtn.setImageResource(R.drawable.play);
         playBtn.setOnClickListener(ListenDetailsActivity.this);
-        playBtn.setVisibility(View.INVISIBLE);
+      //  playBtn.setVisibility(View.INVISIBLE);
         forwrdBtn = (ImageView) findViewById(R.id.forwrd_btn);
         forwrdBtn.setOnClickListener(ListenDetailsActivity.this);
         progressCircular = (ProgressBar) findViewById(R.id.progress_circular);
+        progressCircular.setVisibility(View.GONE);
         qareeName = (TextView) findViewById(R.id.qareeName);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
     }
@@ -371,5 +399,13 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         notificationManager.notify(0, builder.build());
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // updatSeekBarTimer();
+    }
 }
+
 

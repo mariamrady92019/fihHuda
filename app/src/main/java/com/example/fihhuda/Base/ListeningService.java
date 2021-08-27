@@ -1,6 +1,5 @@
 package com.example.fihhuda.Base;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.media.AudioAttributes;
@@ -10,21 +9,18 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.fihhuda.ListenSrvicesManager;
 import com.example.fihhuda.R;
 import com.example.fihhuda.quran.fullQuranReadingModels.FullQuran;
 import com.example.fihhuda.quran.views.ListenDetailsActivity;
-import com.example.fihhuda.quran.views.QuranFragment;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;
 import com.google.gson.Gson;
 
@@ -41,16 +37,13 @@ import static com.example.fihhuda.quran.views.ListenDetailsActivity.progressCirc
 public class ListeningService extends LifecycleService implements MediaPlayer.OnPreparedListener , MediaPlayer.OnCompletionListener {
 
     public static MediaPlayer listeningMediaPlayer;
-   static ProgressBar progressBar ;
-    private int eTime;
-    private int oTime;
-    private int sTime;
-    private Runnable updateSongTime;
-    private Handler hdlr=new Handler();
-    ListeningViewModel  listeningViewModel = new ListeningViewModel("");
+   ListeningViewModel  listeningViewModel = new ListeningViewModel("");
     MediaPlayer.OnCompletionListener onCompletionListener = this;
+    MediaPlayer.OnPreparedListener onPreparedListener = this;
     public static MutableLiveData<String> message;
-int position ;
+    int position ;
+    boolean startForFirstTime;
+
     public ListeningService() {
     }
 
@@ -67,33 +60,13 @@ int position ;
     public void onCreate() {
         super.onCreate();
         Log.e("log", "onCreate: created");
+
+       // listeningViewModel = new ViewModelProvider(this).get(ListeningViewModel.class);
+       listeningViewModel.context=this;
+
         listeningMediaPlayer= ListenSrvicesManager.getInstance();
-                listeningMediaPlayer.setOnCompletionListener(this);
+        listeningMediaPlayer.setOnCompletionListener(this);
         listeningMediaPlayer.setOnPreparedListener(this);
-
-       /* final Runnable runnable = new Runnable(){
-            public void run() {
-                //some code here
-                Log.e("log", "onCreate: thread created");
-                try {
-                    md.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-*/
-
-
-
-        // starting the process
-
-
-        // returns the status
-        // of the program
-
 
     }
 
@@ -118,8 +91,11 @@ int position ;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.e("log", "onCreate: onstart command");
-//!listeningMediaPlayer.isPlaying()&&
+        position = intent.getIntExtra("position",0);
+        //startForFirstTime = intent.getBooleanExtra("startForFirstTime",true);
+        startPlayingAudio(position,true);
+        /*
+         //!listeningMediaPlayer.isPlaying()&&
         // if(ListenSrvicesManager.getInstance()==null) {
         String message = intent.getExtras().getString("url");
        position = intent.getIntExtra("position",0);
@@ -144,32 +120,7 @@ int position ;
 
         listeningMediaPlayer.prepareAsync();
         Log.e("log", "onCreate: praper thread");
-
-
-        //!=null
-     /* else if(listeningMediaPlayer!=null){
-          //check intent the same or not
-              //if same
-                 // listeningMediaPlayer.seekTo();
-              //else then new surah
-            listeningMediaPlayer.stop();
-            listeningMediaPlayer = null ;
-            try {
-                listeningMediaPlayer=ListenSrvicesManager.getInstance();
-                listeningMediaPlayer.setDataSource(ListenDetailsActivity.audioUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            listeningMediaPlayer.setOnPreparedListener(this);
-
-            ListenDetailsActivity.progressCircular.setVisibility(View.VISIBLE);
-
-            listeningMediaPlayer.prepareAsync();
-            Log.e("log", "onCreate: praper thread");
-
-        }*/
-
-        // md.start();
+        */
 
 
         return START_STICKY;
@@ -178,8 +129,8 @@ int position ;
     @Override
     public void onPrepared(MediaPlayer mp) {
         if(!listeningMediaPlayer.isPlaying()&&listeningMediaPlayer!=null) {
-            progressCircular.setVisibility(View.GONE);
-            ListenDetailsActivity.playBtn.setImageResource(R.drawable.puase);
+         //   progressCircular.setVisibility(View.GONE);
+           // ListenDetailsActivity.playBtn.setImageResource(R.drawable.puase);
             listeningMediaPlayer.start();
             //createNotifications();
             listeningMediaPlayer.setOnCompletionListener(this);
@@ -200,69 +151,83 @@ int position ;
         Log.e("log", position+"");
         position= position+1;
         if(position>1&&position<115){
-        startAfterComplition(position);}
+        startPlayingAudio(position,false);}
 
     }
-    public void startAfterComplition(int position){
+
+
+    public void startPlayingAudio(int position , boolean isInMainThread){
         Log.e("log", "start after complition");
+        //reset
           ListenSrvicesManager.getInstance().release();
           ListenSrvicesManager.setMediaPlayerNull();
+
+
         String sorahName=getSurahNameByPosition(position);
         String[] splitStr = sorahName.split("\\s+");
         String soraRenamed = reName(splitStr[1]);
         Log.e("log", soraRenamed);
 
-        String audioUrl= null;
-       // surahName.setText(sorahName);
-        progressCircular.setVisibility(View.VISIBLE);
+
+       // progressCircular.setVisibility(View.VISIBLE);
+       //get url in view model by retrofit
         listeningViewModel.getListeningDataBId_SuraName(9,soraRenamed);
-        listeningMediaPlayer.setOnPreparedListener(this);
-        //start= true;
 
-       // isplayingimage=true;
-     listeningViewModel.uriLink.observe(this, new Observer<String>() {
-         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-         @Override
-         public void onChanged(String s) {
-                  // ListenSrvicesManager.getInstance().release();
-                  // ListenSrvicesManager.setMediaPlayerNull();
-             if(s.contains("htt")){
-             listeningMediaPlayer = ListenSrvicesManager.getInstance();
+       // listeningMediaPlayer.setOnPreparedListener(this);
 
-             listeningMediaPlayer.setAudioAttributes(
-                     new AudioAttributes.Builder()
-                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                             .setUsage(AudioAttributes.USAGE_MEDIA)
-                             .build());
-             Log.e("log", s+"link");
-
-                      try {
-                           listeningMediaPlayer.reset();
-                          listeningMediaPlayer.setDataSource(s);
-
-                      } catch (IOException e) {
-                          e.printStackTrace();
-                      }
-
-                      progressCircular.setVisibility(View.VISIBLE);
-
-                      try {
-                          listeningMediaPlayer.prepare();
-                          listeningMediaPlayer.start();
-                          listeningMediaPlayer.setOnCompletionListener(onCompletionListener);
-
-                      } catch (IOException e) {
-                          e.printStackTrace();
-                      }
-                     // listeningMediaPlayer.start();
-
-                  }
+        observeUrlFromListeningViewModel(isInMainThread);
 
 
-         }
-     });
+
+    }
+
+    private void observeUrlFromListeningViewModel(final boolean isInmainThred) {
+        listeningViewModel.uriLink.observe(this, new Observer<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onChanged(String s) {
+                // ListenSrvicesManager.getInstance().release();
+                // ListenSrvicesManager.setMediaPlayerNull();
+                if(s.contains("htt")){
+                    listeningMediaPlayer = ListenSrvicesManager.getInstance();
+
+                    listeningMediaPlayer.setAudioAttributes(
+                            new AudioAttributes.Builder()
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                                    .build());
+                    Log.e("log", s+"link");
+
+                    try {
+                        listeningMediaPlayer.reset();
+                        listeningMediaPlayer.setDataSource(s);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                  //  progressCircular.setVisibility(View.VISIBLE);
+
+                    try {
+                        if(isInmainThred==false){
+                        listeningMediaPlayer.prepare();
+                        listeningMediaPlayer.start();}
+                        else{
+                            listeningMediaPlayer.prepareAsync();
+                            listeningMediaPlayer.setOnPreparedListener(onPreparedListener);
+                        }
+                        listeningMediaPlayer.setOnCompletionListener(onCompletionListener);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // listeningMediaPlayer.start();
+
+                }
 
 
+            }
+        });
     }
 /*
     public void onCompletion(MediaPlayer mp) {
@@ -286,7 +251,6 @@ int position ;
         }
         return rename;
     }
-
     public String getSurahNameByPosition(int position){
 
         InputStream fileIn = null;
