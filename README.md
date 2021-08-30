@@ -7,9 +7,12 @@
 * [MVVM architecture Pattern]
 * [Rebosotiry & singlton design Pattern]
 * [Retrofit for dealing with RestApi]
+* [Services & thread]
+* [Live Data]
 * [Gson converter]
-* [Android Services for mediaPlayer handling]
 * [RecyclerView & Fragment]
+* [bottom navigation to move between fragments]
+* [custom bottomSheet]
 
 
 ## Now lets go to see our Application !
