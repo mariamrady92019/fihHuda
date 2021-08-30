@@ -9,6 +9,7 @@
 * [Retrofit for dealing with RestApi]
 * [Services & thread]
 * [Live Data]
+* [Shared preferences for small local cach]
 * [Gson converter]
 * [RecyclerView & Fragment]
 * [bottom navigation to move between fragments]
