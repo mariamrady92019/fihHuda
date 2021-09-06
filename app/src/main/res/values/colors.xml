@@ -9,6 +9,8 @@
     <color name="white">#FDFCFC</color>
     #CCE1E1DF
     <color name="azkar_background">#FDFCFC</color>
+    <color name="black">#0C0C0C</color>
+    <color name="brown">#551906</color>
 
 
 </resources>

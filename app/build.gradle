@@ -93,4 +93,7 @@ dependencies {
      //lifecycle service to use in service with observable
         implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
+    // support lib for notification
+     //   implementation "androidx.core:core:1.6.0"
+
 }

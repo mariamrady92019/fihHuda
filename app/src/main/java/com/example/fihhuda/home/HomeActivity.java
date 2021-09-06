@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.fihhuda.tafseer.views.TafseerFragment;
 import com.example.fihhuda.azkar.views.AzkarFragment;
 import com.example.fihhuda.R;
 import com.example.fihhuda.quran.views.QuranFragment;
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.navigation_tafseer:{
-                       // fragment =new TafseerFragment();
+                     fragment =new TafseerFragment();
                         break;
                     }
                 }

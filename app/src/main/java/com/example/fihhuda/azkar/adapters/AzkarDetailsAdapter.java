@@ -10,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fihhuda.R;
 import com.example.fihhuda.azkar.parsingJson.AzkarDataItem;
+import com.example.fihhuda.quran.fullQuranReadingModels.Ayah;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AzkarDetailsAdapter extends RecyclerView.Adapter<AzkarDetailsAdapter.AzkarDetailsAdapterViewHolde> {
     List<AzkarDataItem> list = new ArrayList<>();
-
     public AzkarDetailsAdapter(List<AzkarDataItem> list) {
         this.list = list;
     }
+
 
     @NonNull
     @Override
@@ -31,6 +34,9 @@ public class AzkarDetailsAdapter extends RecyclerView.Adapter<AzkarDetailsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AzkarDetailsAdapterViewHolde holder, int position) {
+
+
+
         AzkarDataItem zexr = list.get(position);
         holder.zekr.setText(zexr.getZekr());
         holder.fadl.setText(zexr.getDescription()+"");

@@ -1,26 +1,19 @@
 package com.example.fihhuda.quran.viewsModel;
 
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fihhuda.R;
-import com.example.fihhuda.quran.adapters.SurahDetailsAdapter;
 import com.example.fihhuda.quran.fullQuranReadingModels.Ayah;
 import com.example.fihhuda.quran.fullQuranReadingModels.FullQuran;
 import com.example.fihhuda.quran.fullQuranReadingModels.Surah;
-import com.example.fihhuda.quran.views.QuranFragment;
+import com.example.fihhuda.tafseer.tafseerSearchModel.forSearchInFragment.AyahsSearchItem;
+import com.example.fihhuda.tafseer.tafseerSearchModel.forSearchInFragment.SearchForAyah;
+import com.example.fihhuda.tafseer.tafseerSearchModel.SearchModel;
+import com.example.fihhuda.tafseer.tafseerSearchModel.forSearchInFragment.SurahsSearchItem;
+import com.example.fihhuda.tafseer.tafseerSearchModel.forTafseerReadingInActivity.AllTafseerReading;
+import com.example.fihhuda.tafseer.tafseerSearchModel.forTafseerReadingInActivity.SurahsItem;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -30,7 +23,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +45,7 @@ public class QuranViewModel extends ViewModel {
 
     //this function too get all quran from jason as aclass called fullquraan
     //  have a class called data .. thia data class have list of suras
-    public  void getAllQuranFromJson(){
+    public FullQuran getAllQuranFromJson(){
 
         InputStream fileIn = null;
         try {
@@ -67,6 +59,8 @@ public class QuranViewModel extends ViewModel {
         } catch (IOException e) {
          message.setValue(e.getLocalizedMessage());
         }
+
+        return full;
        }
 
 //return surah as pages each page as list of ayah
@@ -120,9 +114,69 @@ public class QuranViewModel extends ViewModel {
      }
 
 
+     public List<SearchModel> getSearchedForByWord(String word ){
+         InputStream fileIn = null;
+         try {
+                 fileIn = context.getAssets().open("quran_clean.json");
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+             BufferedInputStream bufferedIn = new BufferedInputStream(fileIn);
+             Reader reader = new InputStreamReader(bufferedIn, Charset.forName("UTF-8")) ;
+            SearchForAyah full =new Gson().fromJson(reader, SearchForAyah.class);
+         List<SurahsSearchItem> suras = full.getSurahs();
+         List<SearchModel> allSearchedAyat = new ArrayList<>();
+         List<AyahsSearchItem> ayahs;
+         for(int i = 0 ; i<suras.size();i++) {
+             SurahsSearchItem surah = suras.get(i);
+              ayahs = surah.getAyahs();
+             for (int k = 0 ; k<ayahs.size();k++){
+                   if(ayahs.get(k).getText().contains(word)){
+                       allSearchedAyat.add(new SearchModel(surah.getName(),ayahs.get(k)));
+                   }
+               }
+         }
+        return allSearchedAyat;
+      }
 
 
 
+      //get Tafseer OF surah
+
+      public SurahsItem getTafseerForSura(String suraName){
+        SurahsItem suraitem=null;
+          InputStream fileIn = null;
+          try {
+              fileIn = context.getAssets().open("tafseer.json");
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          BufferedInputStream bufferedIn = new BufferedInputStream(fileIn);
+          Reader reader = new InputStreamReader(bufferedIn, Charset.forName("UTF-8")) ;
+         AllTafseerReading allTafseerReading =new Gson().fromJson(reader, AllTafseerReading.class);
+          List<SurahsItem> list = allTafseerReading.getData().getSurahs();
+          for(SurahsItem  item: list){
+              if(item.getName().contains(suraName)){
+                 suraitem= item;
+                 break;
+              }
+          }
+        return suraitem;
+      }
+
+      //get Surah Ayat For Tafseer
+    public Surah getSuaraAyatForTafseer(String name){
+        Surah surahitem = null ;
+        FullQuran fullQuran = getAllQuranFromJson();
+        List<Surah> list = fullQuran.getData().getSurahs();
+        for(Surah item: list){
+            if(item.getName().contains(name)){
+                surahitem= item;
+                break;
+            }
+        }
+        return surahitem;
+    }
 
 }
 

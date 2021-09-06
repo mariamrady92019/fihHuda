@@ -1,30 +1,48 @@
 package com.example.fihhuda.quran.views;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.media.session.MediaSession;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.media.session.MediaButtonReceiver;
 
 import com.example.fihhuda.Base.ApplicationClass;
 import com.example.fihhuda.Base.BaseActivity;
+import com.example.fihhuda.Base.Constants;
 import com.example.fihhuda.Base.ListeningService;
+import com.example.fihhuda.Base.NotificationBroadCastReceiver;
+import com.example.fihhuda.Base.NotificationCreator_Helper;
+import com.example.fihhuda.Base.SharedPereffernceManager;
 import com.example.fihhuda.ListenSrvicesManager;
 import com.example.fihhuda.R;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;
 
-public class ListenDetailsActivity extends BaseActivity implements View.OnClickListener  {
+import okhttp3.internal.Util;
+
+public class ListenDetailsActivity extends BaseActivity implements View.OnClickListener , SeekBar.OnSeekBarChangeListener {
 
     protected TextView surahName;
     protected TextView currentPosition;
@@ -35,7 +53,6 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     public static ProgressBar progressCircular;
     protected TextView qareeName;
    public  SeekBar seekBar;
-    private int position;
     private String surahnameIntented;
     int readerId;
     private ListeningViewModel viewModel;
@@ -49,8 +66,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     private Runnable updateSongTime;
     private Handler hdlr=new Handler();
     private boolean start= false;
-
-
+    boolean firstTimeToDone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +74,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         viewModel = new ViewModelProvider(this).get(ListeningViewModel.class);
            viewModel.context=ListenDetailsActivity.this;
            viewModel.uriLink.setValue("");
+
         initView();
         getDataIntented();
         surahName.setText(surahnameIntented);
@@ -71,7 +88,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
       //  observeDataFromViewMOdel();
         isplayingimage=false;
         isPaused=false;
-
+        firstTimeToDone = true;
           if(ListenSrvicesManager.getInstance()!=null||ListenSrvicesManager.getInstance().isPlaying()){
 
             stopService(new Intent(this,ListeningService.class));
@@ -81,9 +98,10 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
               sTime=0;
               eTime=0;
           }
-       ListeningViewModel.preparedDone.setValue("");
+          ListeningViewModel.preparedDone.setValue("");
+          ListeningViewModel.completionDone.setValue("");
        observePreparationDone();
-       //observeComplitionDone();
+       observeComplitionDone();
         //observeDestroyedDone();
     }
 
@@ -93,21 +111,25 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         if (view.getId() == R.id.rew_btn) {
             playBtn.setImageResource(R.drawable.play);
             progressCircular.setVisibility(View.VISIBLE);
-            position = position - 1;
+           Constants.position--;
+            String suraname = viewModel.getSurahNameByPosition(Constants.position);
+            surahName.setText(suraname);
+            NotificationCreator_Helper.updateNotification(suraname);
             Intent intent = new Intent(this, ListeningService.class);
            // intent.putExtra("url",audioUrl);
-            intent.putExtra("position",position);
+            //even if now i had name of sura so its not nessaccery to pass pos but after complition it will need it
+            intent.putExtra("position",Constants.position);
             startService(intent); 
             //startNewSuraByButton(position);
         }
 
-        else if (view.getId() == R.id.play_btn) {
+        else if (view.getId() == R.id.play_btn)   {
 
                   //مش شغال
                   if (isplayingimage==false) {
                       //play after pause
                       if(isPaused == true){
-
+                           Constants.isPlaying=true;
                           ListenSrvicesManager.getInstance().seekTo(sTime);
                           ListenSrvicesManager.getInstance().start();
                           isPaused=false;
@@ -115,11 +137,14 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                           playBtn.setImageResource(R.drawable.puase);
                       }else{
                           //play
+                          Constants.isPlaying=true;
+
                           progressCircular.setVisibility(View.VISIBLE);
-                          createNotifications();
+
+                        NotificationCreator_Helper.createNotifications(ListenDetailsActivity.this,surahnameIntented,getPackageName());
                           Intent intent = new Intent(this, ListeningService.class);
                           //intent.putExtra("url",audioUrl);
-                          intent.putExtra("position",position);
+                          intent.putExtra("position",Constants.position);
                           startService(intent);
                           isplayingimage = true;
                          // isPaused=false;
@@ -131,6 +156,8 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                       }}
                   //\puas
                   else if (isplayingimage==true){
+                      Constants.isPlaying=false;
+
                       ListenSrvicesManager.getInstance().pause();
                       playBtn.setImageResource(R.drawable.play);
                       isplayingimage=false;
@@ -138,21 +165,18 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                   }
 
               }
-
-
-
-
-
         else if (view.getId() == R.id.forwrd_btn) {
 
             playBtn.setImageResource(R.drawable.play);
             progressCircular.setVisibility(View.VISIBLE);
-            position++;
-
+            Constants.position++;
+            String suraname = viewModel.getSurahNameByPosition(Constants.position);
+            surahName.setText(suraname);
+            NotificationCreator_Helper.updateNotification(suraname);
         //startNewSuraByButton(position);
             Intent intent = new Intent(this, ListeningService.class);
             // intent.putExtra("url",audioUrl);
-            intent.putExtra("position",position);
+            intent.putExtra("position",Constants.position);
             startService(intent);
 
         }
@@ -162,7 +186,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
 
     private void getDataIntented() {
-        position = getIntent().getIntExtra("position", -1);
+        Constants.position = getIntent().getIntExtra("position", -1);
         surahnameIntented = getIntent().getStringExtra("name");
         readerId = getIntent().getIntExtra("shekh_id", 1);
         qareeName.setText(QuranFragment.shikh_name);
@@ -178,6 +202,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
 
+
   public  void  observePreparationDone(){
        viewModel.preparedDone.observe(ListenDetailsActivity.this, new Observer<String>() {
             @Override
@@ -186,7 +211,12 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                      playBtn.setImageResource(R.drawable.puase);
                      progressCircular.setVisibility(View.GONE);
                      isplayingimage=true;
-                   // viewModel.preparedDone.setValue("");
+
+
+                     surahName.setText(viewModel.getSurahNameByPosition(Constants.position));
+
+
+                    // viewModel.preparedDone.setValue("");
                     updatSeekBarTimer();
                     //in update fun
                    // progressCircular.setVisibility(View.GONE);
@@ -214,6 +244,8 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         progressCircular.setVisibility(View.GONE);
         qareeName = (TextView) findViewById(R.id.qareeName);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
+
     }
 
 
@@ -293,48 +325,77 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
         eTime=(ListenSrvicesManager.getInstance().getDuration()/1000);
         sTime =ListenSrvicesManager.getInstance().getCurrentPosition()/1000;
-        total.setText((eTime+""));
-        currentPosition.setText(sTime+"");
+        total.setText((getTimeString(eTime*1000)+""));
+        currentPosition.setText(getTimeString(sTime*1000)+"");
         if (oTime == 0) {
          //   seekBar.setMax(eTime);
             oTime = 1;
         }
-        seekBar.setMax(eTime);
+           seekBar.setMax(eTime);
           seekBar.setProgress(sTime/1000);
+
         updateSongTime = new Runnable() {
             @Override
             public void run() {
-                sTime = ListenSrvicesManager.getInstance().getCurrentPosition();
-                seekBar.setProgress((sTime/1000));
-                currentPosition.setText(sTime/1000+"/");
 
-                hdlr.postDelayed(this, 100);
+                    sTime = ListenSrvicesManager.getInstance().getCurrentPosition();
+
+                    seekBar.setProgress((sTime/1000));
+                    currentPosition.setText(getTimeString(sTime)+"/");
+                    // total.setText(eTime/1000);
+                    hdlr.postDelayed(this, 100);
+
+
             }
         };
            hdlr.postDelayed(updateSongTime, 100);
     }
 
+    private String getTimeString(long millis) {
+        StringBuffer buf = new StringBuffer();
 
-  /*  //observe destroyed donr
-    private void observeDestroyedDone() {
-        viewModel.destroyedDone.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                 playBtn.setImageResource(R.drawable.play);
-                 progressCircular.setVisibility(View.GONE);
-            }
-        });
-    }*/
+        int hours = (int) (millis / (1000 * 60 * 60));
+        int minutes = (int) ((millis % (1000 * 60 * 60)) / (1000 * 60));
+        int seconds = (int) (((millis % (1000 * 60 * 60)) % (1000 * 60)) / 1000);
+        if(hours==0){
+            buf.append(String.format("%02d", minutes))
+                    .append(":")
+                    .append(String.format("%02d", seconds));
 
+        }else {
+            buf
+                    .append(String.format("%02d", hours))
+                    .append(":")
+                    .append(String.format("%02d", minutes))
+                    .append(":")
+                    .append(String.format("%02d", seconds));
+        }
+        return buf.toString();
+    }
 
    //observe completion donr
     private void observeComplitionDone() {
-        Log.e("log", "onCreate: completion done");
-
-        viewModel.completionDone.observe(ListenDetailsActivity.this, new Observer<String>() {
+       ListeningViewModel.completionDone.observe(ListenDetailsActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if (isplayingimage==true){
+
+                if(s.contains("done")){
+                    playBtn.setImageResource(R.drawable.play);
+                    progressCircular.setVisibility(View.VISIBLE);
+                    //get data from shared preference
+                   // String name=  SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getString("suraNmae","");
+                    //  Log.e("com",name+"nn");
+                    //position=position+1;
+                    String name=viewModel.getSurahNameByPosition(Constants.position);
+                    surahName.setText(name);
+                    NotificationCreator_Helper.updateNotification(name);
+                   // position= SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getInt("position",1);
+
+
+                }
+
+
+           /*     if (isplayingimage==true){
                     playBtn.setImageResource(R.drawable.play);
                 sTime = 0;
                 currentPosition.setText(sTime + "");
@@ -349,9 +410,16 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                 startAfterComplition(position);
 
 
-            }
+            }*/
             }
         });
+
+
+
+
+
+
+
     }
 
      public void startAfterComplition(int position){
@@ -384,27 +452,32 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         super.onStop();
         observeComplitionDone();
     }
-    public  void createNotifications(){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ApplicationClass.CHANNEL_ID)
-                .setSmallIcon(R.drawable.quran)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(0, builder.build());
-
-    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
        // updatSeekBarTimer();
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if(fromUser){
+            ListenSrvicesManager.getInstance().seekTo(progress);
+            seekBar.setProgress(progress);}
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 }
 

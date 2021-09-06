@@ -56,9 +56,6 @@ public class ListeningViewModel extends ViewModel {
         this.destroyedDone.setValue(destroyedDone);
     }
 */
-    public void setCompletionDone(String completionDone) {
-        this.completionDone.setValue(completionDone);
-    }
 
 
     public String getSurahNameByPosition(int position){

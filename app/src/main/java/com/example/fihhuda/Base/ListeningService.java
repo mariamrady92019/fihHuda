@@ -5,20 +5,15 @@ import android.os.IBinder;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.fihhuda.ListenSrvicesManager;
-import com.example.fihhuda.R;
 import com.example.fihhuda.quran.fullQuranReadingModels.FullQuran;
 import com.example.fihhuda.quran.views.ListenDetailsActivity;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;
@@ -78,10 +73,10 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
        progressCircular.setVisibility(View.GONE);
 
       // listeningMediaPlayer.stop();
-      ListenDetailsActivity.playBtn.setImageResource(R.drawable.play);
+    //  ListenDetailsActivity.playBtn.setImageResource(R.drawable.play);
 
         listeningMediaPlayer.release();
-        ListenSrvicesManager.setMediaPlayerNull();
+       // ListenSrvicesManager.setMediaPlayerNull();
        //ListeningViewModel.destroyedDone.setValue("destroyed done");
 
     }
@@ -91,6 +86,9 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+        if(listeningMediaPlayer.isPlaying()){
+           listeningMediaPlayer.stop();
+        }
         position = intent.getIntExtra("position",0);
         //startForFirstTime = intent.getBooleanExtra("startForFirstTime",true);
         startPlayingAudio(position,true);
@@ -128,7 +126,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        if(!listeningMediaPlayer.isPlaying()&&listeningMediaPlayer!=null) {
+      //  if(!listeningMediaPlayer.isPlaying()&&listeningMediaPlayer!=null) {
          //   progressCircular.setVisibility(View.GONE);
            // ListenDetailsActivity.playBtn.setImageResource(R.drawable.puase);
             listeningMediaPlayer.start();
@@ -137,8 +135,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
             ListeningViewModel.preparedDone.setValue("prepared done");
 
             // updatSeekBarTimer();
-        }
-
+       //
     }
 
     @Override
@@ -146,12 +143,12 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
         //worked
         Log.e("log", "complete");
 
-        ListeningViewModel.completionDone.setValue("completion done");
+        ListeningViewModel.completionDone.postValue("completion done");
 
         Log.e("log", position+"");
-        position= position+1;
-        if(position>1&&position<115){
-        startPlayingAudio(position,false);}
+        Constants.position++;
+        if(Constants.position>=1&&position<115){
+        startPlayingAudio(Constants.position,false);}
 
     }
 
@@ -163,7 +160,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
           ListenSrvicesManager.setMediaPlayerNull();
 
 
-        String sorahName=getSurahNameByPosition(position);
+        String sorahName=listeningViewModel.getSurahNameByPosition(position);
         String[] splitStr = sorahName.split("\\s+");
         String soraRenamed = reName(splitStr[1]);
         Log.e("log", soraRenamed);
@@ -174,9 +171,17 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
         listeningViewModel.getListeningDataBId_SuraName(9,soraRenamed);
 
        // listeningMediaPlayer.setOnPreparedListener(this);
-
+           updateSharedPreferences(sorahName,position);
         observeUrlFromListeningViewModel(isInMainThread);
 
+
+
+    }
+
+    private void updateSharedPreferences(String sorahName, int position) {
+        SharedPereffernceManager.getSharedInstance(this).edit().putString("suraName", sorahName);
+        SharedPereffernceManager.getSharedInstance(this).edit().putInt("position",position);
+        SharedPereffernceManager.getSharedInstance(this).edit().apply();
 
 
     }
@@ -210,8 +215,10 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
 
                     try {
                         if(isInmainThred==false){
-                        listeningMediaPlayer.prepare();
-                        listeningMediaPlayer.start();}
+                            ListeningViewModel.preparedDone.postValue("done");
+                            listeningMediaPlayer.prepare();
+                             listeningMediaPlayer.start();
+                        }
                         else{
                             listeningMediaPlayer.prepareAsync();
                             listeningMediaPlayer.setOnPreparedListener(onPreparedListener);
@@ -228,6 +235,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
 
             }
         });
+
     }
 /*
     public void onCompletion(MediaPlayer mp) {
@@ -250,21 +258,6 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
             rename="الإنسان";
         }
         return rename;
-    }
-    public String getSurahNameByPosition(int position){
-
-        InputStream fileIn = null;
-        String surahName= null;
-        try {
-            fileIn = this.getAssets().open("quran.json");
-            BufferedInputStream bufferedIn = new BufferedInputStream(fileIn);
-            Reader reader = new InputStreamReader(bufferedIn, Charset.forName("UTF-8")) ;
-            FullQuran full =new Gson().fromJson(reader, FullQuran.class);
-            surahName = full.getData().getSurahs().get(position).getName();
-        } catch (IOException e) {
-        }
-
-        return surahName;
     }
 
 }
