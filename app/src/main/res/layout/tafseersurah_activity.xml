@@ -1,0 +1,52 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/whiteborder"
+        android:layout_margin="@dimen/_10sdp"
+        android:textDirection="rtl"
+        >
+
+        <TextView
+            android:id="@+id/searched_ayah_souraName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textDirection="rtl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/_5sdp"
+            android:text="سورة الفاتحة"
+            android:fontFamily="@font/bhuth"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp"
+
+            />
+
+        <TextView
+            android:id="@+id/searched_ayah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textDirection="rtl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searched_ayah_souraName"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_20sdp"
+            android:textColor="@color/brown"
+            android:fontFamily="@font/bhuth"
+            android:padding="@dimen/_3sdp"
+            />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/searched_ayah"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

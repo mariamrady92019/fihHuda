@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+     android:orientation="horizontal"
+    android:layout_marginTop="@dimen/_5sdp"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/not_quran"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FihHuda/فيه هدي"
+        android:textSize="@dimen/_10sdp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+
+
+<!--    <TextView
+        android:id="@+id/qarea_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/surah_name"
+        android:layout_margin="@dimen/_15sdp"
+        android:text="فارس عباد"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/bukraregular"
+        android:textSize="@dimen/_15sdp"
+        android:layout_weight="1"
+        />-->
+        <TextView
+            android:id="@+id/surah_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center"
+            android:text="سورة الفاتحة"
+            android:layout_weight="1"
+            android:fontFamily="@font/bukraregular"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+       android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    >
+
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/not_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/not_cancel"
+        android:layout_gravity="center"
+        />
+
+    <ImageView
+        android:id="@+id/not_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/not_prev"
+        app:layout_constraintTop_toTopOf="@id/not_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/not_cancel"
+        app:layout_constraintStart_toEndOf="@id/not_cancel"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:id="@+id/not_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/not_playing"
+        app:layout_constraintTop_toTopOf="@id/not_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/not_cancel"
+        app:layout_constraintStart_toEndOf="@id/not_previous"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:id="@+id/not_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/not_next"
+        app:layout_constraintTop_toTopOf="@id/not_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/not_cancel"
+        app:layout_constraintStart_toEndOf="@id/not_play"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_weight="1"
+        />
+</LinearLayout>
+
+</LinearLayout>
