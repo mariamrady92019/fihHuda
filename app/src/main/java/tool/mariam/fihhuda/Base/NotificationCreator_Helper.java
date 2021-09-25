@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import tool.mariam.fihhuda.ListenSrvicesManager;
+import tool.mariam.fihhuda.ListenServicesManager;
 import tool.mariam.fihhuda.R;
 
 public class NotificationCreator_Helper {
@@ -106,17 +106,17 @@ public class NotificationCreator_Helper {
         // update the title
         //puase
         if(Constants.isPlaying==true){
-            time=ListenSrvicesManager.getInstance().getCurrentPosition();
+            time = ListenServicesManager.getInstance().getCurrentPosition();
 
-            remoteViews.setImageViewResource(R.id.not_play,R.drawable.not_puase);
-            ListenSrvicesManager.getInstance().pause();
-            Constants.isPlaying=false;
+            remoteViews.setImageViewResource(R.id.not_play, R.drawable.not_puase);
+            ListenServicesManager.getInstance().pause();
+            Constants.isPlaying = false;
 
-        }else{
-            remoteViews.setImageViewResource(R.id.not_play,R.drawable.not_playing);
-            Constants.isPlaying=true;
-            ListenSrvicesManager.getInstance().seekTo(time);
-            ListenSrvicesManager.getInstance().start();
+        }else {
+            remoteViews.setImageViewResource(R.id.not_play, R.drawable.not_playing);
+            Constants.isPlaying = true;
+            ListenServicesManager.getInstance().seekTo(time);
+            ListenServicesManager.getInstance().start();
 
         }
         // update the content

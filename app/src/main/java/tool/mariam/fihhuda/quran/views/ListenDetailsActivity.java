@@ -18,7 +18,7 @@ import tool.mariam.fihhuda.Base.BaseActivity;
 import tool.mariam.fihhuda.Base.Constants;
 import tool.mariam.fihhuda.Base.ListeningService;
 import tool.mariam.fihhuda.Base.NotificationCreator_Helper;
-import tool.mariam.fihhuda.ListenSrvicesManager;
+import tool.mariam.fihhuda.ListenServicesManager;
 import tool.mariam.fihhuda.R;
 import tool.mariam.fihhuda.quran.viewsModel.ListeningViewModel;
 
@@ -69,15 +69,15 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         isplayingimage=false;
         isPaused=false;
         firstTimeToDone = true;
-          if(ListenSrvicesManager.getInstance()!=null||ListenSrvicesManager.getInstance().isPlaying()){
+        if (ListenServicesManager.getInstance() != null || ListenServicesManager.getInstance().isPlaying()) {
 
-            stopService(new Intent(this,ListeningService.class));
-             // ListenSrvicesManager.getInstance().stop();
-             ListenSrvicesManager.getInstance().release();
-             ListenSrvicesManager.setMediaPlayerNull();
-              sTime=0;
-              eTime=0;
-          }
+            stopService(new Intent(this, ListeningService.class));
+            // ListenSrvicesManager.getInstance().stop();
+            ListenServicesManager.getInstance().release();
+            ListenServicesManager.setMediaPlayerNull();
+            sTime = 0;
+            eTime = 0;
+        }
           ListeningViewModel.preparedDone.setValue("");
           ListeningViewModel.completionDone.setValue("");
        observePreparationDone();
@@ -108,12 +108,12 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                   //مش شغال
                   if (isplayingimage==false) {
                       //play after pause
-                      if(isPaused == true){
-                           Constants.isPlaying=true;
-                          ListenSrvicesManager.getInstance().seekTo(sTime);
-                          ListenSrvicesManager.getInstance().start();
-                          isPaused=false;
-                          isplayingimage=true;
+                      if(isPaused == true) {
+                          Constants.isPlaying = true;
+                          ListenServicesManager.getInstance().seekTo(sTime);
+                          ListenServicesManager.getInstance().start();
+                          isPaused = false;
+                          isplayingimage = true;
                           playBtn.setImageResource(R.drawable.puase);
                       }else{
                           //play
@@ -138,7 +138,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                   else if (isplayingimage==true){
                       Constants.isPlaying=false;
 
-                      ListenSrvicesManager.getInstance().pause();
+                      ListenServicesManager.getInstance().pause();
                       playBtn.setImageResource(R.drawable.play);
                       isplayingimage=false;
                       isPaused= true;
@@ -299,26 +299,26 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     //seekbar horozintal line timer
     public void updatSeekBarTimer(//final MediaPlayer mediaPlayer
                                  ) {
-      // eTime = ListenSrvicesManager.getInstance().getDuration();
-      //  progressCircular.setVisibility(View.GONE);
-       // playBtn.setImageResource(R.drawable.puase);
+        // eTime = ListenSrvicesManager.getInstance().getDuration();
+        //  progressCircular.setVisibility(View.GONE);
+        // playBtn.setImageResource(R.drawable.puase);
 
-        eTime=(ListenSrvicesManager.getInstance().getDuration()/1000);
-        sTime =ListenSrvicesManager.getInstance().getCurrentPosition()/1000;
-        total.setText((getTimeString(eTime*1000)+""));
-        currentPosition.setText(getTimeString(sTime*1000)+"");
+        eTime = (ListenServicesManager.getInstance().getDuration() / 1000);
+        sTime = ListenServicesManager.getInstance().getCurrentPosition() / 1000;
+        total.setText((getTimeString(eTime * 1000) + ""));
+        currentPosition.setText(getTimeString(sTime * 1000) + "");
         if (oTime == 0) {
-         //   seekBar.setMax(eTime);
+            //   seekBar.setMax(eTime);
             oTime = 1;
         }
-           seekBar.setMax(eTime);
-          seekBar.setProgress(sTime/1000);
+        seekBar.setMax(eTime);
+        seekBar.setProgress(sTime / 1000);
 
         updateSongTime = new Runnable() {
             @Override
             public void run() {
 
-                    sTime = ListenSrvicesManager.getInstance().getCurrentPosition();
+                sTime = ListenServicesManager.getInstance().getCurrentPosition();
 
                     seekBar.setProgress((sTime/1000));
                     currentPosition.setText(getTimeString(sTime)+"/");
@@ -417,12 +417,13 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
      }
 
    public  void startNewSuraByButton(int position){
-        if(position>1&&position<114){
-            stopService(new Intent(this,ListeningService.class));
-       // ListenSrvicesManager.getInstance().stop();
-       ListenSrvicesManager.getInstance().release();
-       ListenSrvicesManager.mediaPlayer=null;
-       startAfterComplition(position);}else{
+        if(position>1&&position<114) {
+            stopService(new Intent(this, ListeningService.class));
+            // ListenSrvicesManager.getInstance().stop();
+            ListenServicesManager.getInstance().release();
+            ListenServicesManager.setMediaPlayerNull();
+            startAfterComplition(position);
+        }else{
             return;
         }
    }
@@ -445,8 +446,8 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if(fromUser){
-            ListenSrvicesManager.getInstance().seekTo(progress);
-            seekBar.setProgress(progress);}
+                ListenServicesManager.getInstance().seekTo(progress);
+                seekBar.setProgress(progress);}
 
     }
 

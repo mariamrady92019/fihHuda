@@ -17,7 +17,7 @@ import androidx.lifecycle.Observer;
 
 import java.io.IOException;
 
-import tool.mariam.fihhuda.ListenSrvicesManager;
+import tool.mariam.fihhuda.ListenServicesManager;
 import tool.mariam.fihhuda.quran.viewsModel.ListeningViewModel;
 
 
@@ -51,7 +51,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
        // listeningViewModel = new ViewModelProvider(this).get(ListeningViewModel.class);
        listeningViewModel.context=this;
 
-        listeningMediaPlayer= ListenSrvicesManager.getInstance();
+        listeningMediaPlayer = ListenServicesManager.getInstance();
         listeningMediaPlayer.setOnCompletionListener(this);
         listeningMediaPlayer.setOnPreparedListener(this);
 
@@ -145,21 +145,21 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
     }
 
 
-    public void startPlayingAudio(int position , boolean isInMainThread){
+    public void startPlayingAudio(int position , boolean isInMainThread) {
         Log.e("log", "start after complition");
         //reset
-          ListenSrvicesManager.getInstance().release();
-          ListenSrvicesManager.setMediaPlayerNull();
+        ListenServicesManager.getInstance().release();
+        ListenServicesManager.setMediaPlayerNull();
 
 
-        String sorahName=listeningViewModel.getSurahNameByPosition(position);
+        String sorahName = listeningViewModel.getSurahNameByPosition(position);
         String[] splitStr = sorahName.split("\\s+");
         String soraRenamed = reName(splitStr[1]);
         Log.e("log", soraRenamed);
 
 
-       // progressCircular.setVisibility(View.VISIBLE);
-       //get url in view model by retrofit
+        // progressCircular.setVisibility(View.VISIBLE);
+        //get url in view model by retrofit
         listeningViewModel.getListeningDataBId_SuraName(9,soraRenamed);
 
        // listeningMediaPlayer.setOnPreparedListener(this);
@@ -186,7 +186,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
                 // ListenSrvicesManager.getInstance().release();
                 // ListenSrvicesManager.setMediaPlayerNull();
                 if(s.contains("htt")){
-                    listeningMediaPlayer = ListenSrvicesManager.getInstance();
+                    listeningMediaPlayer = ListenServicesManager.getInstance();
 
                     listeningMediaPlayer.setAudioAttributes(
                             new AudioAttributes.Builder()
