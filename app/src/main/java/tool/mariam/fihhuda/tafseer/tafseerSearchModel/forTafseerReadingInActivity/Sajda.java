@@ -2,36 +2,36 @@ package tool.mariam.fihhuda.tafseer.tafseerSearchModel.forTafseerReadingInActivi
 
 import com.google.gson.annotations.SerializedName;
 
-public class Sajda{
+public class Sajda {
 
-	@SerializedName("obligatory")
-	private boolean obligatory;
+    @SerializedName("obligatory")
+    private boolean obligatory;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("id")
+    private int id;
 
-	@SerializedName("recommended")
-	private boolean recommended;
+    @SerializedName("recommended")
+    private boolean recommended;
 
-	public boolean isObligatory(){
-		return obligatory;
-	}
+    public boolean isObligatory() {
+        return obligatory;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public boolean isRecommended(){
-		return recommended;
-	}
+    public boolean isRecommended() {
+        return recommended;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"Sajda{" + 
-			"obligatory = '" + obligatory + '\'' + 
-			",id = '" + id + '\'' + 
-			",recommended = '" + recommended + '\'' + 
-			"}";
-		}
+    @Override
+    public String toString() {
+        return
+                "Sajda{" +
+                        "obligatory = '" + obligatory + '\'' +
+                        ",id = '" + id + '\'' +
+                        ",recommended = '" + recommended + '\'' +
+                        "}";
+    }
 }

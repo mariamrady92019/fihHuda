@@ -14,24 +14,22 @@ import tool.mariam.fihhuda.ListenServicesManager;
 import tool.mariam.fihhuda.R;
 
 public class NotificationCreator_Helper {
-   public String PackageName ;
- public   static NotificationCompat.Builder builder;
-  static   RemoteViews remoteViews;
-  public static NotificationBroadCastReceiver actionBroadcastReceiver;
-  public static NotificationManagerCompat notificationManager;
-
-
-
+    public static NotificationCompat.Builder builder;
+    public static NotificationBroadCastReceiver actionBroadcastReceiver;
+    public static NotificationManagerCompat notificationManager;
+    static RemoteViews remoteViews;
+    static int time;
+    public String PackageName;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static void createNotifications(Context context, String soraname , String packageName){
+    public static void createNotifications(Context context, String soraname, String packageName) {
 
-         actionBroadcastReceiver = new NotificationBroadCastReceiver();
+        actionBroadcastReceiver = new NotificationBroadCastReceiver();
         /// actionBroadcastReceiver.context=getApplicationContext();
         // Get the layouts to use in the custom notification
         remoteViews = new RemoteViews(packageName, R.layout.custom_notification);
         // RemoteViews notificationLayoutExpanded = new RemoteViews(getPackageName(), R.layout.notification_large);
-          remoteViews.setTextViewText(R.id.surah_name,soraname);
+        remoteViews.setTextViewText(R.id.surah_name, soraname);
 
         builder = new NotificationCompat.Builder(context, App.CHANNEL_ID)
                 .setSmallIcon(R.drawable.quran)
@@ -44,29 +42,28 @@ public class NotificationCreator_Helper {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
 
-
         // cancel actions
         Intent intent = new Intent("cancel");
         PendingIntent pending = PendingIntent.getBroadcast(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.not_cancel,pending);
+        remoteViews.setOnClickPendingIntent(R.id.not_cancel, pending);
         //previous action
         Intent intentpre = new Intent("prev");
         PendingIntent pendingpre = PendingIntent.getBroadcast(context, 1,
                 intentpre, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.not_previous,pendingpre);
+        remoteViews.setOnClickPendingIntent(R.id.not_previous, pendingpre);
 
         // next action
         Intent intentnext = new Intent("next");
         PendingIntent pendingnext = PendingIntent.getBroadcast(context, 3,
                 intentnext, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.not_next,pendingnext);
+        remoteViews.setOnClickPendingIntent(R.id.not_next, pendingnext);
 
         // play_puas action
         Intent intentplay_puase = new Intent("play_puase");
         PendingIntent pendingplay_puas = PendingIntent.getBroadcast(context, 4,
                 intentplay_puase, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.not_play,pendingplay_puas);
+        remoteViews.setOnClickPendingIntent(R.id.not_play, pendingplay_puas);
 
 
         notificationManager = NotificationManagerCompat.from(context);
@@ -75,44 +72,39 @@ public class NotificationCreator_Helper {
         notificationManager.notify(0, builder.build());
 
 
-
-
-
-
-
     }
 
-    public static void updateNotification(String name){
+    public static void updateNotification(String name) {
 
         int api = Build.VERSION.SDK_INT;
         // update the icon
         // update the title
-        remoteViews.setTextViewText(R.id.surah_name,name);
+        remoteViews.setTextViewText(R.id.surah_name, name);
         // update the content
 
         // update the notification
         if (api < Build.VERSION_CODES.HONEYCOMB) {
             notificationManager.notify(0, builder.build());
-        }else if (api >= Build.VERSION_CODES.HONEYCOMB) {
+        } else if (api >= Build.VERSION_CODES.HONEYCOMB) {
             notificationManager.notify(0, builder.build());
         }
     }
-    static int time;
-    public static void updatePlayButtonNotification(){
+
+    public static void updatePlayButtonNotification() {
 
         int api = Build.VERSION.SDK_INT;
 
         // update the icon
         // update the title
         //puase
-        if(Constants.isPlaying==true){
+        if (Constants.isPlaying == true) {
             time = ListenServicesManager.getInstance().getCurrentPosition();
 
             remoteViews.setImageViewResource(R.id.not_play, R.drawable.not_puase);
             ListenServicesManager.getInstance().pause();
             Constants.isPlaying = false;
 
-        }else {
+        } else {
             remoteViews.setImageViewResource(R.id.not_play, R.drawable.not_playing);
             Constants.isPlaying = true;
             ListenServicesManager.getInstance().seekTo(time);
@@ -124,12 +116,12 @@ public class NotificationCreator_Helper {
         // update the notification
         if (api < Build.VERSION_CODES.HONEYCOMB) {
             notificationManager.notify(0, builder.build());
-        }else if (api >= Build.VERSION_CODES.HONEYCOMB) {
+        } else if (api >= Build.VERSION_CODES.HONEYCOMB) {
             notificationManager.notify(0, builder.build());
         }
     }
 
-    public  static  void cancelNotification() {
+    public static void cancelNotification() {
         notificationManager.cancelAll();
     }
 

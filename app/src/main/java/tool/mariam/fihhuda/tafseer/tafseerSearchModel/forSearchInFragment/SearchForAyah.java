@@ -6,18 +6,18 @@ import java.util.List;
 
 public class SearchForAyah {
 
-	@SerializedName("surahs")
-	private List<SurahsSearchItem> surahs;
+    @SerializedName("surahs")
+    private List<SurahsSearchItem> surahs;
 
-	public List<SurahsSearchItem> getSurahs() {
-		return surahs;
-	}
+    public List<SurahsSearchItem> getSurahs() {
+        return surahs;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"SearchForAyah{" + 
-			"surahs = '" + surahs + '\'' + 
-			"}";
-		}
+    @Override
+    public String toString() {
+        return
+                "SearchForAyah{" +
+                        "surahs = '" + surahs + '\'' +
+                        "}";
+    }
 }

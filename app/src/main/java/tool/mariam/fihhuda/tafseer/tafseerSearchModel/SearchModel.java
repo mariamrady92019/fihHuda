@@ -5,7 +5,7 @@ import tool.mariam.fihhuda.tafseer.tafseerSearchModel.forSearchInFragment.AyahsS
 public class SearchModel {
 
     String surahName;
-    AyahsSearchItem ayah ;
+    AyahsSearchItem ayah;
 
     public SearchModel(String surahName, AyahsSearchItem ayah) {
         this.surahName = surahName;

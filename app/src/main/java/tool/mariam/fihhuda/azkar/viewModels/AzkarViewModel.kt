@@ -1,10 +1,11 @@
 package tool.mariam.fihhuda.azkar.viewModels
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import tool.mariam.fihhuda.Base.App
 import tool.mariam.fihhuda.azkar.parsingJson.AzkarDataItem
 import tool.mariam.fihhuda.azkar.parsingJson.AzkarResponse
 import java.io.BufferedInputStream
@@ -15,28 +16,33 @@ import java.io.Reader
 import java.nio.charset.Charset
 import java.util.*
 
-class AzkarViewModel(application: Application) : AndroidViewModel(application) {
+class AzkarViewModel : ViewModel() {
+
+    private val _categories = MutableLiveData<List<String>>()
+    val categories: LiveData<List<String>> = _categories
 
 
-    val allAzkarFromJson: AzkarResponse?
-        get() {
-            var fileIn: InputStream? = null
-            var allListOfAzkar: AzkarResponse? = null
-            try {
-                fileIn = getApplication<App>().assets.open("azkar.json")
-                val bufferedIn = BufferedInputStream(fileIn)
-                val reader: Reader = InputStreamReader(bufferedIn, Charset.forName("UTF-8"))
-                allListOfAzkar = Gson().fromJson(reader, AzkarResponse::class.java)
-                Log.e("azkar", "parsed")
-                Log.e("azkar", allListOfAzkar.azkarData[0].zekr)
+    private val _azkarsLD = MutableLiveData<List<AzkarDataItem>>()
+    val azkars: LiveData<List<AzkarDataItem>> = _azkarsLD
 
-                //gitListOfAzkar(allListOfAzkar);
-                //getCategories(allListOfAzkar);
-            } catch (e: IOException) {
-                Log.e("azkar", "error")
-            }
-            return allListOfAzkar
+    fun allAzkarFromJson(ctx: Context): AzkarResponse? {
+        var fileIn: InputStream? = null
+        var allListOfAzkar: AzkarResponse? = null
+        try {
+            fileIn = ctx.assets.open("azkar.json")
+            val bufferedIn = BufferedInputStream(fileIn)
+            val reader: Reader = InputStreamReader(bufferedIn, Charset.forName("UTF-8"))
+            allListOfAzkar = Gson().fromJson(reader, AzkarResponse::class.java)
+            Log.e("azkar", "parsed")
+            Log.e("azkar", allListOfAzkar.azkarData[0].zekr)
+
+            //gitListOfAzkar(allListOfAzkar);
+            //getCategories(allListOfAzkar);
+        } catch (e: IOException) {
+            Log.e("azkar", "error")
         }
+        return allListOfAzkar
+    }
 
     fun gitListOfAzkar(azkarResponse: AzkarResponse): List<List<AzkarDataItem>> {
         val listOfAllAzkar = azkarResponse.azkarData
@@ -66,35 +72,35 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return listOfcategories
     }
 
-    val categories: List<String>
-        get() {
-            val azkarResponse = allAzkarFromJson
-            val cat: MutableList<String> = ArrayList()
-            var category = azkarResponse!!.azkarData[0].category
-            cat.add(category)
-            for (item in azkarResponse.azkarData) {
-                category = if (item.category == category) {
-                    continue
-                } else {
-                    cat.add(item.category)
-                    item.category
-                }
+    fun prepareCategories(ctx: Context) {
+        val azkarResponse = allAzkarFromJson(ctx)
+        val cat: MutableList<String> = ArrayList()
+        var category = azkarResponse!!.azkarData[0].category
+        cat.add(category)
+        for (item in azkarResponse.azkarData) {
+            category = if (item.category == category) {
+                continue
+            } else {
+                cat.add(item.category)
+                item.category
             }
-            return cat
         }
+        return _categories.postValue(cat)
+    }
 
-    fun getAZkarByCategoryName(categryName: String): List<AzkarDataItem> {
-        val azkarResponse = allAzkarFromJson
+    fun prepareAzkarByCategory(ctx: Context, categoryName: String?) {
+        categoryName ?: return
+        val azkarResponse = allAzkarFromJson(ctx)
         val spesefiedAzkarBYCategry: MutableList<AzkarDataItem> = ArrayList()
         var hasFounded = false // to
         for (i in azkarResponse!!.azkarData.indices) {
-            if (azkarResponse.azkarData[i].category == categryName) {
+            if (azkarResponse.azkarData[i].category == categoryName) {
                 spesefiedAzkarBYCategry.add(azkarResponse.azkarData[i])
                 hasFounded = true
-            } else if (azkarResponse.azkarData[i].category != categryName && hasFounded) {
+            } else if (azkarResponse.azkarData[i].category != categoryName && hasFounded) {
                 break
             }
         }
-        return spesefiedAzkarBYCategry
+        _azkarsLD.postValue(spesefiedAzkarBYCategry)
     }
 }

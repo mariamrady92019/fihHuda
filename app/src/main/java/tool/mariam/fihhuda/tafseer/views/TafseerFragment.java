@@ -29,9 +29,9 @@ public class TafseerFragment extends Fragment implements SearchView.OnQueryTextL
     protected SearchView searchBar;
     protected Toolbar toolbar;
     protected RecyclerView searchRecycler;
-    private View rootView;
     TafseerFragmentAdapter adapter;
     LinearLayoutManager layoutManager;
+    private View rootView;
     private QuranViewModel viewModel;
 
     public TafseerFragment() {
@@ -59,15 +59,15 @@ public class TafseerFragment extends Fragment implements SearchView.OnQueryTextL
         super.onViewCreated(view, savedInstanceState);
         initView(rootView);
         viewModel = new ViewModelProvider(getActivity()).get(QuranViewModel.class);
-           viewModel.context=getActivity();
+        viewModel.context = getActivity();
     }
 
     private void initSearchRecycler(List<SearchModel> list) {
-        layoutManager  =  new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         adapter = new TafseerFragmentAdapter(list);
-         searchRecycler.setAdapter(adapter);
-         searchRecycler.setLayoutManager(layoutManager);
-         onItemClick();
+        searchRecycler.setAdapter(adapter);
+        searchRecycler.setLayoutManager(layoutManager);
+        onItemClick();
     }
 
     private void onItemClick() {
@@ -76,36 +76,36 @@ public class TafseerFragment extends Fragment implements SearchView.OnQueryTextL
             public void onAyahClick(SearchModel model) {
                 //start activity for tafseer reading
                 //scroll to the position
-                Intent intent = new Intent(getActivity(),TafseerDetailsForAllSura.class);
-                intent.putExtra("suraName",model.getSurahName());
+                Intent intent = new Intent(getActivity(), TafseerDetailsForAllSura.class);
+                intent.putExtra("suraName", model.getSurahName());
                 startActivity(intent);
-              }
+            }
         });
     }
 
 
     private void initView(View rootView) {
-        searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
-        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        searchRecycler = (RecyclerView) rootView.findViewById(R.id.search_Recycler);
+        searchBar = rootView.findViewById(R.id.search_bar);
+        toolbar = rootView.findViewById(R.id.toolbar);
+        searchRecycler = rootView.findViewById(R.id.search_Recycler);
         searchBar.setOnQueryTextListener(this);
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.e("submit",query);
-        List<SearchModel> list= viewModel.getSearchedForByWord(query);
-        Log.e("submit",list.get(0).getAyah()+"");
+        Log.e("submit", query);
+        List<SearchModel> list = viewModel.getSearchedForByWord(query);
+        Log.e("submit", list.get(0).getAyah() + "");
 
         initSearchRecycler(list);
 
-     return false;
+        return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-       String word_searchFor=newText;
-        Log.e("ch",newText);
+        String word_searchFor = newText;
+        Log.e("ch", newText);
 
         return false;
     }

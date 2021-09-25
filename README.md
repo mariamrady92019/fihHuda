@@ -39,3 +39,6 @@ Solced by
 ```
 - 64K limit -> make `minSdk 21` so **multidex** is **enabled by default**.
 - large size images -> generate different images using [appicon](https://appicon.co/#image-sets)
+
+- use ViewModel delegation by ` implementation "androidx.fragment:fragment-ktx:1.3.6"`
+-

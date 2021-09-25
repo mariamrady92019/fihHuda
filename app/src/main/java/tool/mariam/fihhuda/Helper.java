@@ -15,16 +15,16 @@ import java.io.IOException;
 public class Helper extends AppCompatActivity implements Runnable {
 
 
-   public static MediaPlayer mediaPlayer = new MediaPlayer();
+    public static MediaPlayer mediaPlayer = new MediaPlayer();
+    public boolean isPlaying = false;
     SeekBar seekBar;
-   public boolean isPlaying = false;
     TextView seekBarHint;
 
-    public Helper(MediaPlayer mediaPlayer, SeekBar seekBar,  TextView textView) {
-        this.mediaPlayer = mediaPlayer;
+    public Helper(MediaPlayer mediaPlayer, SeekBar seekBar, TextView textView) {
+        Helper.mediaPlayer = mediaPlayer;
         this.seekBar = seekBar;
 
-        seekBarHint= textView;
+        seekBarHint = textView;
 
     }
 
@@ -62,7 +62,7 @@ public class Helper extends AppCompatActivity implements Runnable {
 
                 if (progress > 0 && mediaPlayer != null && !mediaPlayer.isPlaying()) {
                     clearMediaPlayer();
-                     seekBar.setProgress(0);
+                    seekBar.setProgress(0);
                 }
 
             }
@@ -82,48 +82,47 @@ public class Helper extends AppCompatActivity implements Runnable {
     public void playSong(String url) {
 
 
+        if (isPlaying || mediaPlayer != null) {
+            clearMediaPlayer();
+            seekBar.setProgress(0);
+            isPlaying = false;
+        }
 
 
-         if ( isPlaying||this.mediaPlayer!=null) {
-                clearMediaPlayer();
-                seekBar.setProgress(0);
-               isPlaying = false;
+        if (!isPlaying) {
+
+            if (mediaPlayer == null) {
+                mediaPlayer = new MediaPlayer();
             }
 
 
-            if (!isPlaying) {
-
-                if (mediaPlayer == null) {
-                    mediaPlayer = new MediaPlayer();
-                }
-
-
-                mediaPlayer.setAudioAttributes(
-                        new AudioAttributes.Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .setUsage(AudioAttributes.USAGE_MEDIA)
-                                .build()
-                );
-                try {
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.prepare(); // might take long! (for buffering, etc)
+            mediaPlayer.setAudioAttributes(
+                    new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+            );
+            try {
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare(); // might take long! (for buffering, etc)
                 mediaPlayer.setVolume(0.5f, 0.5f);
                 mediaPlayer.setLooping(false);
                 seekBar.setMax(mediaPlayer.getDuration());
 
                 mediaPlayer.start();
 
-               isPlaying = true;
+                isPlaying = true;
                 new Thread(this).start();
 
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    } catch (IOException e) {
-                    e.printStackTrace();
-                }}}
 
-
-                public void run() {
+    public void run() {
 
         int currentPosition = mediaPlayer.getCurrentPosition();
         int total = mediaPlayer.getDuration();

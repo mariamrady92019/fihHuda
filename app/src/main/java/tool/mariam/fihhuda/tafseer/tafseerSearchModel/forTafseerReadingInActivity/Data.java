@@ -6,26 +6,26 @@ import java.util.List;
 
 public class Data {
 
-	@SerializedName("edition")
-	private Edition edition;
+    @SerializedName("edition")
+    private Edition edition;
 
-	@SerializedName("surahs")
-	private List<SurahsItem> surahs;
+    @SerializedName("surahs")
+    private List<SurahsItem> surahs;
 
-	public Edition getEdition() {
-		return edition;
-	}
+    public Edition getEdition() {
+        return edition;
+    }
 
-	public List<SurahsItem> getSurahs(){
-		return surahs;
-	}
+    public List<SurahsItem> getSurahs() {
+        return surahs;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"Data{" + 
-			"edition = '" + edition + '\'' + 
-			",surahs = '" + surahs + '\'' + 
-			"}";
-		}
+    @Override
+    public String toString() {
+        return
+                "Data{" +
+                        "edition = '" + edition + '\'' +
+                        ",surahs = '" + surahs + '\'' +
+                        "}";
+    }
 }

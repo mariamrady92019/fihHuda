@@ -22,38 +22,41 @@ import tool.mariam.fihhuda.ListenServicesManager;
 import tool.mariam.fihhuda.R;
 import tool.mariam.fihhuda.quran.viewsModel.ListeningViewModel;
 
-public class ListenDetailsActivity extends BaseActivity implements View.OnClickListener , SeekBar.OnSeekBarChangeListener {
+public class ListenDetailsActivity extends BaseActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
+    public static ImageView playBtn;
+    public static ProgressBar progressCircular;
+    private final Handler hdlr = new Handler();
+    public SeekBar seekBar;
     protected TextView surahName;
     protected TextView currentPosition;
     protected TextView total;
     protected ImageView rewBtn;
-    public static ImageView playBtn;
     protected ImageView forwrdBtn;
-    public static ProgressBar progressCircular;
     protected TextView qareeName;
-   public  SeekBar seekBar;
-    private String surahnameIntented;
     int readerId;
-    private ListeningViewModel viewModel;
-    public  String audioUrl;
-    private String failedMessage;
     boolean isPaused = false;
     boolean isplayingimage = false;
+    public String audioUrl;
+    boolean firstTimeToDone;
+    int num = 0;
+    boolean founded = false;
+    private String surahnameIntented;
+    private ListeningViewModel viewModel;
     private int eTime;
     private int oTime;
     private int sTime;
     private Runnable updateSongTime;
-    private Handler hdlr=new Handler();
-    private boolean start= false;
-    boolean firstTimeToDone;
+    private String failedMessage;
+    private boolean start = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_listen_details);
         viewModel = new ViewModelProvider(this).get(ListeningViewModel.class);
-           viewModel.context=ListenDetailsActivity.this;
-           viewModel.uriLink.setValue("");
+        viewModel.context = ListenDetailsActivity.this;
+        viewModel.uriLink.setValue("");
 
         initView();
         getDataIntented();
@@ -64,10 +67,10 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
         Log.e("splitted", splitStr[1]);
 
-       // getListeningData(readerId, soraRenamed);
-      //  observeDataFromViewMOdel();
-        isplayingimage=false;
-        isPaused=false;
+        // getListeningData(readerId, soraRenamed);
+        //  observeDataFromViewMOdel();
+        isplayingimage = false;
+        isPaused = false;
         firstTimeToDone = true;
         if (ListenServicesManager.getInstance() != null || ListenServicesManager.getInstance().isPlaying()) {
 
@@ -78,74 +81,71 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
             sTime = 0;
             eTime = 0;
         }
-          ListeningViewModel.preparedDone.setValue("");
-          ListeningViewModel.completionDone.setValue("");
-       observePreparationDone();
-       observeComplitionDone();
+        ListeningViewModel.preparedDone.setValue("");
+        ListeningViewModel.completionDone.setValue("");
+        observePreparationDone();
+        observeComplitionDone();
         //observeDestroyedDone();
     }
-
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.rew_btn) {
             playBtn.setImageResource(R.drawable.play);
             progressCircular.setVisibility(View.VISIBLE);
-           Constants.position--;
+            Constants.position--;
             String suraname = viewModel.getSurahNameByPosition(Constants.position);
             surahName.setText(suraname);
             NotificationCreator_Helper.updateNotification(suraname);
             Intent intent = new Intent(this, ListeningService.class);
-           // intent.putExtra("url",audioUrl);
+            // intent.putExtra("url",audioUrl);
             //even if now i had name of sura so its not nessaccery to pass pos but after complition it will need it
-            intent.putExtra("position",Constants.position);
-            startService(intent); 
+            intent.putExtra("position", Constants.position);
+            startService(intent);
             //startNewSuraByButton(position);
-        }
+        } else if (view.getId() == R.id.play_btn) {
 
-        else if (view.getId() == R.id.play_btn)   {
+            //مش شغال
+            if (isplayingimage == false) {
+                //play after pause
+                if (isPaused == true) {
+                    Constants.isPlaying = true;
+                    ListenServicesManager.getInstance().seekTo(sTime);
+                    ListenServicesManager.getInstance().start();
+                    isPaused = false;
+                    isplayingimage = true;
+                    playBtn.setImageResource(R.drawable.puase);
+                } else {
+                    //play
+                    Constants.isPlaying = true;
 
-                  //مش شغال
-                  if (isplayingimage==false) {
-                      //play after pause
-                      if(isPaused == true) {
-                          Constants.isPlaying = true;
-                          ListenServicesManager.getInstance().seekTo(sTime);
-                          ListenServicesManager.getInstance().start();
-                          isPaused = false;
-                          isplayingimage = true;
-                          playBtn.setImageResource(R.drawable.puase);
-                      }else{
-                          //play
-                          Constants.isPlaying=true;
+                    progressCircular.setVisibility(View.VISIBLE);
 
-                          progressCircular.setVisibility(View.VISIBLE);
+                    NotificationCreator_Helper.createNotifications(ListenDetailsActivity.this, surahnameIntented, getPackageName());
+                    Intent intent = new Intent(this, ListeningService.class);
+                    //intent.putExtra("url",audioUrl);
+                    intent.putExtra("position", Constants.position);
+                    startService(intent);
+                    isplayingimage = true;
+                    // isPaused=false;
+                    // progressCircular.setVisibility(View.VISIBLE);
+                    // playBtn.setImageResource(R.drawable.puase);
 
-                        NotificationCreator_Helper.createNotifications(ListenDetailsActivity.this,surahnameIntented,getPackageName());
-                          Intent intent = new Intent(this, ListeningService.class);
-                          //intent.putExtra("url",audioUrl);
-                          intent.putExtra("position",Constants.position);
-                          startService(intent);
-                          isplayingimage = true;
-                         // isPaused=false;
-                          // progressCircular.setVisibility(View.VISIBLE);
-                          // playBtn.setImageResource(R.drawable.puase);
+                    //updatSeekBarTimer();
 
-                          //updatSeekBarTimer();
+                }
+            }
+            //\puas
+            else if (isplayingimage == true) {
+                Constants.isPlaying = false;
 
-                      }}
-                  //\puas
-                  else if (isplayingimage==true){
-                      Constants.isPlaying=false;
+                ListenServicesManager.getInstance().pause();
+                playBtn.setImageResource(R.drawable.play);
+                isplayingimage = false;
+                isPaused = true;
+            }
 
-                      ListenServicesManager.getInstance().pause();
-                      playBtn.setImageResource(R.drawable.play);
-                      isplayingimage=false;
-                      isPaused= true;
-                  }
-
-              }
-        else if (view.getId() == R.id.forwrd_btn) {
+        } else if (view.getId() == R.id.forwrd_btn) {
 
             playBtn.setImageResource(R.drawable.play);
             progressCircular.setVisibility(View.VISIBLE);
@@ -153,17 +153,15 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
             String suraname = viewModel.getSurahNameByPosition(Constants.position);
             surahName.setText(suraname);
             NotificationCreator_Helper.updateNotification(suraname);
-        //startNewSuraByButton(position);
+            //startNewSuraByButton(position);
             Intent intent = new Intent(this, ListeningService.class);
             // intent.putExtra("url",audioUrl);
-            intent.putExtra("position",Constants.position);
+            intent.putExtra("position", Constants.position);
             startService(intent);
 
         }
 
     }
-
-
 
     private void getDataIntented() {
         Constants.position = getIntent().getIntExtra("position", -1);
@@ -174,33 +172,30 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
     }
 
-
     //call function connected to api from view model .. in view model the function called from rebo
     private void getListeningData(int id, String surahName) {
         viewModel.getListeningDataBId_SuraName(id, surahName);
 
     }
 
-
-
-  public  void  observePreparationDone(){
-       viewModel.preparedDone.observe(ListenDetailsActivity.this, new Observer<String>() {
+    public void observePreparationDone() {
+        ListeningViewModel.preparedDone.observe(ListenDetailsActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(s.contains("done")){
-                     playBtn.setImageResource(R.drawable.puase);
-                     progressCircular.setVisibility(View.GONE);
-                     isplayingimage=true;
+                if (s.contains("done")) {
+                    playBtn.setImageResource(R.drawable.puase);
+                    progressCircular.setVisibility(View.GONE);
+                    isplayingimage = true;
 
 
-                     surahName.setText(viewModel.getSurahNameByPosition(Constants.position));
+                    surahName.setText(viewModel.getSurahNameByPosition(Constants.position));
 
 
                     // viewModel.preparedDone.setValue("");
                     updatSeekBarTimer();
                     //in update fun
-                   // progressCircular.setVisibility(View.GONE);
-                   // playBtn.setImageResource(R.drawable.puase);
+                    // progressCircular.setVisibility(View.GONE);
+                    // playBtn.setImageResource(R.drawable.puase);
 
 
                 }
@@ -209,28 +204,24 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
-        surahName = (TextView) findViewById(R.id.surah_name);
-        currentPosition = (TextView) findViewById(R.id.current_position);
-        total = (TextView) findViewById(R.id.total);
-        rewBtn = (ImageView) findViewById(R.id.rew_btn);
+        surahName = findViewById(R.id.surah_name);
+        currentPosition = findViewById(R.id.current_position);
+        total = findViewById(R.id.total);
+        rewBtn = findViewById(R.id.rew_btn);
         rewBtn.setOnClickListener(ListenDetailsActivity.this);
-        playBtn = (ImageView) findViewById(R.id.play_btn);
+        playBtn = findViewById(R.id.play_btn);
         playBtn.setImageResource(R.drawable.play);
         playBtn.setOnClickListener(ListenDetailsActivity.this);
-      //  playBtn.setVisibility(View.INVISIBLE);
-        forwrdBtn = (ImageView) findViewById(R.id.forwrd_btn);
+        //  playBtn.setVisibility(View.INVISIBLE);
+        forwrdBtn = findViewById(R.id.forwrd_btn);
         forwrdBtn.setOnClickListener(ListenDetailsActivity.this);
-        progressCircular = (ProgressBar) findViewById(R.id.progress_circular);
+        progressCircular = findViewById(R.id.progress_circular);
         progressCircular.setVisibility(View.GONE);
-        qareeName = (TextView) findViewById(R.id.qareeName);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        qareeName = findViewById(R.id.qareeName);
+        seekBar = findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
 
     }
-
-
-    int num = 0;
-    boolean founded = false;
 
     //observe url link from view model
     private void observeDataFromViewMOdel() {
@@ -242,7 +233,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                 Log.e("point", "start");
                 //get uri link and update mediaplaayer
                 if (!s.contains("http")) {//num=1
-                    audioUrl ="not found";
+                    audioUrl = "not found";
                     num++;
                     // Toast.makeText(SuraDetailsActivity.this,"first", Toast.LENGTH_LONG).show();
 
@@ -261,14 +252,14 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
                     //seekBar.setVisibility(View.VISIBLE);
                     Toast.makeText(ListenDetailsActivity.this, audioUrl, Toast.LENGTH_LONG).show();
 
-                    if(start==true){
+                    if (start == true) {
 
-                                progressCircular.setVisibility(View.GONE);
-                                Intent intent = new Intent(ListenDetailsActivity.this,ListeningService.class);
-                                intent.putExtra("url", audioUrl);
-                                Log.e("log", "start service");
+                        progressCircular.setVisibility(View.GONE);
+                        Intent intent = new Intent(ListenDetailsActivity.this, ListeningService.class);
+                        intent.putExtra("url", audioUrl);
+                        Log.e("log", "start service");
 
-                                startService(intent);
+                        startService(intent);
 
 
                     }
@@ -298,7 +289,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
     //seekbar horozintal line timer
     public void updatSeekBarTimer(//final MediaPlayer mediaPlayer
-                                 ) {
+    ) {
         // eTime = ListenSrvicesManager.getInstance().getDuration();
         //  progressCircular.setVisibility(View.GONE);
         // playBtn.setImageResource(R.drawable.puase);
@@ -320,15 +311,15 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
                 sTime = ListenServicesManager.getInstance().getCurrentPosition();
 
-                    seekBar.setProgress((sTime/1000));
-                    currentPosition.setText(getTimeString(sTime)+"/");
-                    // total.setText(eTime/1000);
-                    hdlr.postDelayed(this, 100);
+                seekBar.setProgress((sTime / 1000));
+                currentPosition.setText(getTimeString(sTime) + "/");
+                // total.setText(eTime/1000);
+                hdlr.postDelayed(this, 100);
 
 
             }
         };
-           hdlr.postDelayed(updateSongTime, 100);
+        hdlr.postDelayed(updateSongTime, 100);
     }
 
     private String getTimeString(long millis) {
@@ -337,12 +328,12 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         int hours = (int) (millis / (1000 * 60 * 60));
         int minutes = (int) ((millis % (1000 * 60 * 60)) / (1000 * 60));
         int seconds = (int) (((millis % (1000 * 60 * 60)) % (1000 * 60)) / 1000);
-        if(hours==0){
+        if (hours == 0) {
             buf.append(String.format("%02d", minutes))
                     .append(":")
                     .append(String.format("%02d", seconds));
 
-        }else {
+        } else {
             buf
                     .append(String.format("%02d", hours))
                     .append(":")
@@ -353,23 +344,23 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         return buf.toString();
     }
 
-   //observe completion donr
+    //observe completion donr
     private void observeComplitionDone() {
-       ListeningViewModel.completionDone.observe(ListenDetailsActivity.this, new Observer<String>() {
+        ListeningViewModel.completionDone.observe(ListenDetailsActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
 
-                if(s.contains("done")){
+                if (s.contains("done")) {
                     playBtn.setImageResource(R.drawable.play);
                     progressCircular.setVisibility(View.VISIBLE);
                     //get data from shared preference
-                   // String name=  SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getString("suraNmae","");
+                    // String name=  SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getString("suraNmae","");
                     //  Log.e("com",name+"nn");
                     //position=position+1;
-                    String name=viewModel.getSurahNameByPosition(Constants.position);
+                    String name = viewModel.getSurahNameByPosition(Constants.position);
                     surahName.setText(name);
                     NotificationCreator_Helper.updateNotification(name);
-                   // position= SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getInt("position",1);
+                    // position= SharedPereffernceManager.getSharedInstance(ListenDetailsActivity.this).getInt("position",1);
 
 
                 }
@@ -395,38 +386,33 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
         });
 
 
-
-
-
-
-
     }
 
-     public void startAfterComplition(int position){
-         Log.e("log", "start after complition");
+    public void startAfterComplition(int position) {
+        Log.e("log", "start after complition");
 
-         String sorahName= viewModel.getSurahNameByPosition(position);
-         String[] splitStr = sorahName.split("\\s+");
-         String soraRenamed = reName(splitStr[1]);
-         audioUrl= null;
-         surahName.setText(sorahName);
-         progressCircular.setVisibility(View.VISIBLE);
-         viewModel.getListeningDataBId_SuraName(readerId,soraRenamed);
-         start= true;
-         isplayingimage=true;
-     }
+        String sorahName = viewModel.getSurahNameByPosition(position);
+        String[] splitStr = sorahName.split("\\s+");
+        String soraRenamed = reName(splitStr[1]);
+        audioUrl = null;
+        surahName.setText(sorahName);
+        progressCircular.setVisibility(View.VISIBLE);
+        viewModel.getListeningDataBId_SuraName(readerId, soraRenamed);
+        start = true;
+        isplayingimage = true;
+    }
 
-   public  void startNewSuraByButton(int position){
-        if(position>1&&position<114) {
+    public void startNewSuraByButton(int position) {
+        if (position > 1 && position < 114) {
             stopService(new Intent(this, ListeningService.class));
             // ListenSrvicesManager.getInstance().stop();
             ListenServicesManager.getInstance().release();
             ListenServicesManager.setMediaPlayerNull();
             startAfterComplition(position);
-        }else{
+        } else {
             return;
         }
-   }
+    }
 
     @Override
     protected void onStop() {
@@ -435,19 +421,18 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
-       // updatSeekBarTimer();
+        // updatSeekBarTimer();
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if(fromUser){
-                ListenServicesManager.getInstance().seekTo(progress);
-                seekBar.setProgress(progress);}
+        if (fromUser) {
+            ListenServicesManager.getInstance().seekTo(progress);
+            seekBar.setProgress(progress);
+        }
 
     }
 

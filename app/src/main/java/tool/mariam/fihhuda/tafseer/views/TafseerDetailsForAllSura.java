@@ -28,8 +28,8 @@ public class TafseerDetailsForAllSura extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_tafseer_details_for_all_sura);
-        quranViewModel= new QuranViewModel();
-        quranViewModel.context= TafseerDetailsForAllSura.this;
+        quranViewModel = new QuranViewModel();
+        quranViewModel.context = TafseerDetailsForAllSura.this;
         initView();
         getIntentedData();
 
@@ -40,22 +40,22 @@ public class TafseerDetailsForAllSura extends AppCompatActivity {
         suraName = getIntent().getStringExtra("suraName");
         Surah ayat = quranViewModel.getSuaraAyatForTafseer(suraName);
         List<Ayah> ayatFortafseer = ayat.getAyahs();
-        List<AyahsItem> tafseer =quranViewModel.getTafseerForSura(suraName).getAyahs();
-        Log.e("tafseer",tafseer.toString());
-        initRecyclerView(ayatFortafseer,tafseer);
+        List<AyahsItem> tafseer = quranViewModel.getTafseerForSura(suraName).getAyahs();
+        Log.e("tafseer", tafseer.toString());
+        initRecyclerView(ayatFortafseer, tafseer);
 
     }
 
-    private void initRecyclerView( List<Ayah> ayatFortafseer,  List<AyahsItem> tafseer) {
-        TafseerAllSuraAdapter adapter = new TafseerAllSuraAdapter(tafseer,ayatFortafseer);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+    private void initRecyclerView(List<Ayah> ayatFortafseer, List<AyahsItem> tafseer) {
+        TafseerAllSuraAdapter adapter = new TafseerAllSuraAdapter(tafseer, ayatFortafseer);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         allSurahTafseerRecycler.setAdapter(adapter);
         allSurahTafseerRecycler.setLayoutManager(linearLayoutManager);
 
     }
 
     private void initView() {
-        searchBar = (EditText) findViewById(R.id.search_bar);
-        allSurahTafseerRecycler = (RecyclerView) findViewById(R.id.allSurah_tafseer);
+        searchBar = findViewById(R.id.search_bar);
+        allSurahTafseerRecycler = findViewById(R.id.allSurah_tafseer);
     }
 }

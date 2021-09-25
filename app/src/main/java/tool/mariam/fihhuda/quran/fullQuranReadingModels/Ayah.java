@@ -1,4 +1,3 @@
-
 package tool.mariam.fihhuda.quran.fullQuranReadingModels;
 
 import com.google.gson.annotations.Expose;
@@ -21,12 +20,6 @@ public class Ayah {
     @SerializedName("manzil")
     @Expose
     private int manzil;
-
-    public Ayah(String text, int numberInSurah) {
-        this.text = text;
-        this.numberInSurah = numberInSurah;
-    }
-
     @SerializedName("page")
     @Expose
     private int page;
@@ -36,6 +29,11 @@ public class Ayah {
     @SerializedName("hizbQuarter")
     @Expose
     private int hizbQuarter;
+
+    public Ayah(String text, int numberInSurah) {
+        this.text = text;
+        this.numberInSurah = numberInSurah;
+    }
 
 
     /**

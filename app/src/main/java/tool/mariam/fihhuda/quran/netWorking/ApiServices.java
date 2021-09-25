@@ -8,12 +8,10 @@ import tool.mariam.fihhuda.quran.listeningResponseModels.ResponseModel;
 
 public interface ApiServices {
 
-@FormUrlEncoded
-@POST("QuranShared.php ")
-public abstract Call<ResponseModel> getLinkByIdAndSuraName
-        (@Field("reader_id") int id , @Field("sura") String suraName);
-
-
+    @FormUrlEncoded
+    @POST("QuranShared.php ")
+    Call<ResponseModel> getLinkByIdAndSuraName
+            (@Field("reader_id") int id, @Field("sura") String suraName);
 
 
 }

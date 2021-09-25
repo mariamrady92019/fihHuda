@@ -36,9 +36,8 @@ public class TafseerAllSuraAdapter extends RecyclerView.Adapter<TafseerAllSuraAd
     @Override
     public void onBindViewHolder(@NonNull TafseerFragmentAdapterViewHolde holder, int position) {
 
-             holder.suarname.setText(this.tafseerOfAya.get(position).getText());
-             holder.ayah.setText( this.AyatFortafseer.get(position).getText());
-
+        holder.suarname.setText(this.tafseerOfAya.get(position).getText());
+        holder.ayah.setText(this.AyatFortafseer.get(position).getText());
 
 
     }
@@ -49,8 +48,6 @@ public class TafseerAllSuraAdapter extends RecyclerView.Adapter<TafseerAllSuraAd
     }
 
 
-
-
     public class TafseerFragmentAdapterViewHolde extends RecyclerView.ViewHolder {
 
         protected TextView suarname;
@@ -59,8 +56,8 @@ public class TafseerAllSuraAdapter extends RecyclerView.Adapter<TafseerAllSuraAd
         public TafseerFragmentAdapterViewHolde(@NonNull View itemView) {
 
             super(itemView);
-            suarname= (TextView) itemView.findViewById(R.id.searched_ayah_souraName);
-            ayah = (TextView) itemView.findViewById(R.id.searched_ayah);
+            suarname = itemView.findViewById(R.id.searched_ayah_souraName);
+            ayah = itemView.findViewById(R.id.searched_ayah);
 
         }
 

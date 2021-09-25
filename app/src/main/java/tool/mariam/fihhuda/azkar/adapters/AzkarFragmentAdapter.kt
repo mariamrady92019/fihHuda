@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tool.mariam.fihhuda.R
 
 class AzkarFragmentAdapter(
-    private val categories: List<String>,
+    private val categories: ArrayList<String>,
     private val onClickListener: OnClickListener
 ) : RecyclerView.Adapter<AzkarViewHolder>() {
 
@@ -23,6 +23,12 @@ class AzkarFragmentAdapter(
 
 
     override fun getItemCount() = categories.size
+
+    fun updateData(it: List<String>) {
+        categories.clear()
+        categories.addAll(it)
+        notifyDataSetChanged()
+    }
 
     interface OnClickListener {
         fun onItemClick(pos: Int, categoryName: String?)

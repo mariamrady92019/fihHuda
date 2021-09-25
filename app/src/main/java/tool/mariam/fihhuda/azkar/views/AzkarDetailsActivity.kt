@@ -1,64 +1,48 @@
-package tool.mariam.fihhuda.azkar.views;
+package tool.mariam.fihhuda.azkar.views
 
-import android.os.Bundle;
-import android.widget.TextView;
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
+import tool.mariam.fihhuda.R
+import tool.mariam.fihhuda.azkar.adapters.AzkarDetailsAdapter
+import tool.mariam.fihhuda.azkar.viewModels.AzkarViewModel
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
+class AzkarDetailsActivity : AppCompatActivity() {
 
-import java.util.ArrayList;
-import java.util.List;
+    private val viewModel by viewModels<AzkarViewModel>()
+    private val category: String? by lazy { intent.getStringExtra(EXTRA_CATEGORY_NAME) }
+    private val tvCategoryName: TextView by lazy { findViewById(R.id.category_name) }
+    private val adapter by lazy { AzkarDetailsAdapter(arrayListOf()) }
 
-import tool.mariam.fihhuda.R;
-import tool.mariam.fihhuda.azkar.adapters.AzkarDetailsAdapter;
-import tool.mariam.fihhuda.azkar.parsingJson.AzkarDataItem;
-import tool.mariam.fihhuda.azkar.viewModels.AzkarViewModel;
 
-public class AzkarDetailsActivity extends AppCompatActivity {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        super.setContentView(R.layout.activity_azkar_details)
 
-    protected TextView categoryName;
-    protected RecyclerView azkarDetailsRecycler;
-    private AzkarViewModel viewModel;
-    String category;
-    List<AzkarDataItem> azkar = new ArrayList<>();
-    public static String EXTRA_CATEGORY_NAME = "category_name";
+        viewModel.prepareAzkarByCategory(this, category)
+        buildRecycler()
+        tvCategoryName.text = category
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_azkar_details);
-        viewModel = new ViewModelProvider(AzkarDetailsActivity.this).get(AzkarViewModel.class);
-        initView();
-        getDataIntented();
-        getdataFromAzkarViewModel(category);
-        buildRecycler(azkar);
+        viewModel.azkars.observe(this) {
+            adapter.updateData(it)
+        }
+
     }
 
-    private void getdataFromAzkarViewModel(String category) {
-       azkar= viewModel.getAZkarByCategoryName(category);
+    private fun buildRecycler() {
+        val azkarDetailsRecycler = findViewById<View>(R.id.azkar_details_recycler) as RecyclerView
+        azkarDetailsRecycler.adapter = adapter
+        val helper: SnapHelper = LinearSnapHelper()
+        helper.attachToRecyclerView(azkarDetailsRecycler)
     }
 
-    private void buildRecycler(List<AzkarDataItem> azkar) {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
-        AzkarDetailsAdapter azkarDetailsAdapter = new AzkarDetailsAdapter(azkar);
-        azkarDetailsRecycler.setAdapter(azkarDetailsAdapter);
-        azkarDetailsRecycler.setLayoutManager(layoutManager);
-        layoutManager.setReverseLayout(true);
-        SnapHelper helper = new LinearSnapHelper();
-        helper.attachToRecyclerView(azkarDetailsRecycler);
-    }
 
-    private void getDataIntented() {
-        category = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
-        categoryName.setText(category);
-    }
-
-    private void initView() {
-        categoryName = (TextView) findViewById(R.id.category_name);
-        azkarDetailsRecycler = (RecyclerView) findViewById(R.id.azkar_details_recycler);
+    companion object {
+        const val EXTRA_CATEGORY_NAME = "category_name"
     }
 }

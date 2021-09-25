@@ -39,33 +39,33 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void trackSelectedItem() {
-      onNavigationItemSelectedListener=  new BottomNavigationView.
-              OnNavigationItemSelectedListener() {
+        onNavigationItemSelectedListener = new BottomNavigationView.
+                OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-                Fragment fragment=null;
-                switch (id){
-                    case R.id.navigation_quran:{
-                        fragment= new QuranFragment();
+                Fragment fragment = null;
+                switch (id) {
+                    case R.id.navigation_quran: {
+                        fragment = new QuranFragment();
                         break;
                     }
-                    case R.id.navigation_azkar:{
-                       fragment =new AzkarFragment();
+                    case R.id.navigation_azkar: {
+                        fragment = new AzkarFragment();
                         break;
                     }
-                    case R.id.navigation_ahadeeth:{
-                      //  fragment =new AhadeethFragment();
+                    case R.id.navigation_ahadeeth: {
+                        //  fragment =new AhadeethFragment();
                         break;
                     }
-                    case R.id.navigation_tafseer:{
-                     fragment =new TafseerFragment();
+                    case R.id.navigation_tafseer: {
+                        fragment = new TafseerFragment();
                         break;
                     }
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container,fragment)
+                        .replace(R.id.fragment_container, fragment)
                         .commit();
 
                 return true;
@@ -75,12 +75,12 @@ public class HomeActivity extends AppCompatActivity {
 
     @SuppressLint("WrongViewCast")
     private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
-        navView = (BottomNavigationView) findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        fragmentContainer = findViewById(R.id.fragment_container);
+        navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.navigation_quran);
-        container = (ConstraintLayout) findViewById(R.id.container);
-        searchBar = (EditText) findViewById(R.id.search_bar);
+        container = findViewById(R.id.container);
+        searchBar = findViewById(R.id.search_bar);
     }
 }

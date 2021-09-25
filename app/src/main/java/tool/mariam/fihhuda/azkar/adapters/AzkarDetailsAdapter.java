@@ -15,11 +15,18 @@ import tool.mariam.fihhuda.R;
 import tool.mariam.fihhuda.azkar.parsingJson.AzkarDataItem;
 
 public class AzkarDetailsAdapter extends RecyclerView.Adapter<AzkarDetailsAdapter.AzkarDetailsAdapterViewHolde> {
-    List<AzkarDataItem> list = new ArrayList<>();
-    public AzkarDetailsAdapter(List<AzkarDataItem> list) {
+    ArrayList<AzkarDataItem> list = new ArrayList<>();
+
+    public AzkarDetailsAdapter(ArrayList<AzkarDataItem> list) {
         this.list = list;
     }
 
+
+    public void updateData(List<AzkarDataItem> newData) {
+        list.clear();
+        list.addAll(newData);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -33,11 +40,10 @@ public class AzkarDetailsAdapter extends RecyclerView.Adapter<AzkarDetailsAdapte
     public void onBindViewHolder(@NonNull AzkarDetailsAdapterViewHolde holder, int position) {
 
 
-
         AzkarDataItem zexr = list.get(position);
         holder.zekr.setText(zexr.getZekr());
-        holder.fadl.setText(zexr.getDescription()+"");
-         holder.count.setText(zexr.getCount().equals("")?"(مرة واحدة)":"("+zexr.getCount()+"مرات)");
+        holder.fadl.setText(zexr.getDescription() + "");
+        holder.count.setText(zexr.getCount().equals("") ? "(مرة واحدة)" : "(" + zexr.getCount() + "مرات)");
 
 
     }
@@ -56,9 +62,9 @@ public class AzkarDetailsAdapter extends RecyclerView.Adapter<AzkarDetailsAdapte
         public AzkarDetailsAdapterViewHolde(@NonNull View itemView) {
 
             super(itemView);
-            zekr = (TextView) itemView.findViewById(R.id.zekr);
-            fadl = (TextView) itemView.findViewById(R.id.fadl);
-           count = (TextView) itemView.findViewById(R.id.count);
+            zekr = itemView.findViewById(R.id.zekr);
+            fadl = itemView.findViewById(R.id.fadl);
+            count = itemView.findViewById(R.id.count);
 
         }
 

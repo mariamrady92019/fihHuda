@@ -1,4 +1,3 @@
-
 package tool.mariam.fihhuda.quran.fullQuranReadingModels;
 
 import com.google.gson.annotations.Expose;

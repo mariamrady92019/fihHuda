@@ -34,6 +34,7 @@ import tool.mariam.fihhuda.quran.viewsModel.ListeningViewModel;
 
 public class SuraDetailsActivity extends BaseActivity implements View.OnClickListener {
 
+    private static int oTime = 0, sTime = 0, eTime = 0;
     protected TextView pageNumberTextView;
     protected TextView guzaNumberTextView;
     protected RecyclerView ayasWithPagesRecycler;
@@ -47,18 +48,18 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
     int position;
     int readerId;
     String surahName;
-    //List<List<Ayah>> surahAyat = new ArrayList<>();
-    List<Ayah>surahAyat = new ArrayList<>();
-
+    private final Handler hdlr = new Handler();
     int pages = 0;
-    String failedMessage ;
+    //List<List<Ayah>> surahAyat = new ArrayList<>();
+    List<Ayah> surahAyat = new ArrayList<>();
     String audioUrl;
-    private static int oTime = 0, sTime = 0, eTime = 0;
     MediaPlayer mediaPlayer = new MediaPlayer();
-    private Handler hdlr = new Handler();
     Runnable updateSongTime;
     int buttonPlayed = 0;
-    Helper   helper;
+    String failedMessage;
+    Helper helper;
+    int num = 0;
+    boolean founded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +75,15 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
         initRecycler(surahAyat);
 
         String[] splitStr = surahName.split("\\s+");
-        String soraRenamed=reName(splitStr[1]);
-        Log.e("name",soraRenamed);
+        String soraRenamed = reName(splitStr[1]);
+        Log.e("name", soraRenamed);
 
-        Log.e("splitted",splitStr[1]);
+        Log.e("splitted", splitStr[1]);
 
         //getListeningData(readerId, soraRenamed);
-      //  progressBarCyclic.setVisibility(View.VISIBLE);
-       // playSound.setVisibility(View.GONE);
-       // seekBar.setVisibility(View.GONE);
+        //  progressBarCyclic.setVisibility(View.VISIBLE);
+        // playSound.setVisibility(View.GONE);
+        // seekBar.setVisibility(View.GONE);
 
         observeDataFromViewMOdel();
      /*   final Handler handler = new Handler(Looper.getMainLooper());
@@ -99,55 +100,47 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
 
 **/
         /**   List<Ayah> sora = new ArrayList<>();
-        sora = QuranFragment.viewModel.fullQuran.getValue().getData().getSurahs()
-                .get(position).getAyahs();
-        String s = "";
-        for (int i = 0; i < sora.size(); i++) {
-            s = sora.get(i).toString();
+         sora = QuranFragment.viewModel.fullQuran.getValue().getData().getSurahs()
+         .get(position).getAyahs();
+         String s = "";
+         for (int i = 0; i < sora.size(); i++) {
+         s = sora.get(i).toString();
 
-        }
-        int firstPageinSurah = sora.get(0).getPage();
-        showMessage(s, "ok");
-        showMessage(firstPageinSurah + "", "no");
-        for (List<Ayah> list : surahAyat) {
-            for (Ayah ayah : list)
-                Log.v("String", ayah.getText()+ayah.getNumberInSurah());
-        }
-      **/
+         }
+         int firstPageinSurah = sora.get(0).getPage();
+         showMessage(s, "ok");
+         showMessage(firstPageinSurah + "", "no");
+         for (List<Ayah> list : surahAyat) {
+         for (Ayah ayah : list)
+         Log.v("String", ayah.getText()+ayah.getNumberInSurah());
+         }
+         **/
     }
 
-
-
-
-
-
-    int num = 0;
-    boolean founded = false ;
     //observe url link from view model
     private void observeDataFromViewMOdel() {
-
 
 
         viewModel.uriLink.observe(SuraDetailsActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.e("point","start");
-                   //get uri link and update mediaplaayer
+                Log.e("point", "start");
+                //get uri link and update mediaplaayer
                 if (!s.contains("http")) {//num=1
-                    audioUrl="notfound";
-                      num++;
-                   // Toast.makeText(SuraDetailsActivity.this,"first", Toast.LENGTH_LONG).show();
+                    audioUrl = "notfound";
+                    num++;
+                    // Toast.makeText(SuraDetailsActivity.this,"first", Toast.LENGTH_LONG).show();
 
 
                 }
 
-                if(s.contains("http")){//1  notfounded = false;
-                   if(num==1)
-                        num=0;
-                   founded=true;
+                if (s.contains("http")) {//1  notfounded = false;
+                    if (num == 1)
+                        num = 0;
+                    founded = true;
 
-                    Log.e("point","if contain");
-                    audioUrl=s;
+                    Log.e("point", "if contain");
+                    audioUrl = s;
                     progressBarCyclic.setVisibility(View.GONE);
                     playSound.setVisibility(View.VISIBLE);
                     seekBar.setVisibility(View.VISIBLE);
@@ -156,47 +149,40 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
 
 
-
-                }
+            }
 
 
         });
-
 
 
         viewModel.failedMassage.observe(SuraDetailsActivity.this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 // progressBarCyclic.setVisibility(View.GONE);
-                failedMessage=s;
-             // Toast.makeText(SuraDetailsActivity.this,failedMessage+"", Toast.LENGTH_LONG).show();
+                failedMessage = s;
+                // Toast.makeText(SuraDetailsActivity.this,failedMessage+"", Toast.LENGTH_LONG).show();
 
 
-            } });
+            }
+        });
 
 
-
-        }
-
-
-
-
-
-
+    }
 
 
     private void getDataIntented() {
         position = getIntent().getIntExtra("position", -1);
         surahName = getIntent().getStringExtra("name");
-        readerId=getIntent().getIntExtra("shekh_id",1);
+        readerId = getIntent().getIntExtra("shekh_id", 1);
 
     }
-     //set list of list of ayas
+
+    //set list of list of ayas
     private void getDataModeled() {
         //viewModel =  new ViewModelProvider(this).get(QuranViewModel.class);
         // viewModel.context=SuraDetailsActivity.this;
 
-      //*surahAyat = QuranFragment.viewModel.getSurahAyahs(position);
+        //*surahAyat = QuranFragment.viewModel.getSurahAyahs(position);
         surahAyat = QuranFragment.viewModel.fullQuran.getValue().getData().getSurahs()
                 .get(position).getAyahs();
         pages = surahAyat.size();
@@ -219,15 +205,14 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
 
-        ayasWithPagesRecycler = (RecyclerView) findViewById(R.id.Ayas_WithPagesRecycler);
-
+        ayasWithPagesRecycler = findViewById(R.id.Ayas_WithPagesRecycler);
 
 
     }
 
     public void initRecycler(List<Ayah> suraAyat) {
         adapter = new SurahDetailsAdapter(//List<List<Ayah>>surahAyat
-                surahAyat , surahName);
+                surahAyat, surahName);
         linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         ayasWithPagesRecycler.setAdapter(adapter);
         ayasWithPagesRecycler.setLayoutManager(linearLayoutManager);
@@ -248,31 +233,31 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
 
-       //String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
-       String url=audioUrl;
+        //String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
+        String url = audioUrl;
         //لو انا شغلت سورة وخرجت م الاكتفتفي وروحت اشغل واحده جديده لازم اقفل اللي شغاله الاول عشان
         // كده بشوف الزرار شغال ولا لا
         // لانه
         // لو شغال يبقي انا ف نفس الاكتفتي فاوقفه عادي انما لو مش فيها هعمل الاتنين كونديشن الاولانيين
-        if(Helper.mediaPlayer!=null&&buttonPlayed==0){
+        if (Helper.mediaPlayer != null && buttonPlayed == 0) {
             Helper.mediaPlayer.stop();
-            Helper.mediaPlayer=null ;
+            Helper.mediaPlayer = null;
         }
         if (buttonPlayed == 0) {
             this.buttonPlayed = 1;
 
             mediaPlayer = new MediaPlayer();
-            helper = new Helper(mediaPlayer, seekBar, textView); ;
-            helper.mediaPlayer=this.mediaPlayer;
-          //  progressBarCyclic.setVisibility(View.VISIBLE);
+            helper = new Helper(mediaPlayer, seekBar, textView);
+            Helper.mediaPlayer = this.mediaPlayer;
+            //  progressBarCyclic.setVisibility(View.VISIBLE);
 
             playSound.setImageResource(R.drawable.puase);
             Toast.makeText(SuraDetailsActivity.this, "if", Toast.LENGTH_LONG).show();
-           // String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
+            // String url = audioUrl.substring(0, 4) + "s" + audioUrl.substring(4, audioUrl.length());
 
             helper.onClickButton(url);
-           // progressBarCyclic.setVisibility(View.GONE);
-        }else{
+            // progressBarCyclic.setVisibility(View.GONE);
+        } else {
             buttonPlayed = 0;
             Toast.makeText(SuraDetailsActivity.this, "else", Toast.LENGTH_LONG).show();
             playSound.setImageResource(R.drawable.play);
@@ -281,37 +266,36 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
 
         }
 
-            /**  if (view.getId() == R.id.playSound) {
-             if (buttonPlayed == 0) {
-             progressBarCyclic.setVisibility(View.VISIBLE);
-             buttonPlayed = 1;
-             playSound.setImageResource(R.drawable.puase);
-             Toast.makeText(SuraDetailsActivity.this, "if", Toast.LENGTH_LONG).show();
+        /**  if (view.getId() == R.id.playSound) {
+         if (buttonPlayed == 0) {
+         progressBarCyclic.setVisibility(View.VISIBLE);
+         buttonPlayed = 1;
+         playSound.setImageResource(R.drawable.puase);
+         Toast.makeText(SuraDetailsActivity.this, "if", Toast.LENGTH_LONG).show();
 
-             String url = audioUrl.substring(0,4)+"s"+audioUrl.substring(4,audioUrl.length());
-             //"https://server8.mp3quran.net/frs_a/114.mp3";// your URL here
-             mediaPlayer= new MediaPlayer();
-             hdlr=new Handler();
-             playAudioFromApi(url);
-
-
-             } else {
-             buttonPlayed = 0;
-             Toast.makeText(SuraDetailsActivity.this, "else", Toast.LENGTH_LONG).show();
-             playSound.setImageResource(R.drawable.play);
-             mediaPlayer.stop();
-             mediaPlayer.release();
-             mediaPlayer=null;
-             seekBar.setProgress(0);
+         String url = audioUrl.substring(0,4)+"s"+audioUrl.substring(4,audioUrl.length());
+         //"https://server8.mp3quran.net/frs_a/114.mp3";// your URL here
+         mediaPlayer= new MediaPlayer();
+         hdlr=new Handler();
+         playAudioFromApi(url);
 
 
-             // hdlr=null;
-             } } **/
+         } else {
+         buttonPlayed = 0;
+         Toast.makeText(SuraDetailsActivity.this, "else", Toast.LENGTH_LONG).show();
+         playSound.setImageResource(R.drawable.play);
+         mediaPlayer.stop();
+         mediaPlayer.release();
+         mediaPlayer=null;
+         seekBar.setProgress(0);
 
+
+         // hdlr=null;
+         } } **/
 
 
     }
-    
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void playAudioFromApi(String url) {
 
@@ -332,7 +316,7 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
 
 
         } catch (IOException e) {
-            Toast.makeText(SuraDetailsActivity.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(SuraDetailsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -357,8 +341,6 @@ public class SuraDetailsActivity extends BaseActivity implements View.OnClickLis
         };
         hdlr.postDelayed(updateSongTime, 100);
     }
-
-
 
 
 }

@@ -34,20 +34,20 @@ public class TafseerFragmentAdapter extends RecyclerView.Adapter<TafseerFragment
     @Override
     public void onBindViewHolder(@NonNull TafseerFragmentAdapterViewHolde holder, int position) {
 
-              final SearchModel ayah = list.get(position);
-              holder.suarname.setText(ayah.getSurahName());
+        final SearchModel ayah = list.get(position);
+        holder.suarname.setText(ayah.getSurahName());
 
-              holder.ayah.setText(ayah.getAyah().getText());
+        holder.ayah.setText(ayah.getAyah().getText());
 
-              if (onAyahClickListener != null) {
-                  holder.itemView.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          onAyahClickListener.onAyahClick(ayah);
-                      }
-                  });
-              }
-               }
+        if (onAyahClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAyahClickListener.onAyahClick(ayah);
+                }
+            });
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -61,6 +61,9 @@ public class TafseerFragmentAdapter extends RecyclerView.Adapter<TafseerFragment
     }
 
 
+    public interface onAyahClickListener {
+        void onAyahClick(SearchModel model);
+    }
 
     public class TafseerFragmentAdapterViewHolde extends RecyclerView.ViewHolder {
 
@@ -70,14 +73,10 @@ public class TafseerFragmentAdapter extends RecyclerView.Adapter<TafseerFragment
         public TafseerFragmentAdapterViewHolde(@NonNull View itemView) {
 
             super(itemView);
-            suarname= (TextView) itemView.findViewById(R.id.searched_ayah_souraName);
-            ayah = (TextView) itemView.findViewById(R.id.searched_ayah);
+            suarname = itemView.findViewById(R.id.searched_ayah_souraName);
+            ayah = itemView.findViewById(R.id.searched_ayah);
 
         }
 
-    }
-
- public interface onAyahClickListener{
-        public void onAyahClick(SearchModel model);
     }
 }
