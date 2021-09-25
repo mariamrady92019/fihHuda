@@ -33,7 +33,7 @@ public class NotificationCreator_Helper {
         // RemoteViews notificationLayoutExpanded = new RemoteViews(getPackageName(), R.layout.notification_large);
           remoteViews.setTextViewText(R.id.surah_name,soraname);
 
-        builder = new NotificationCompat.Builder( context,ApplicationClass.CHANNEL_ID)
+        builder = new NotificationCompat.Builder(context, App.CHANNEL_ID)
                 .setSmallIcon(R.drawable.quran)
                 //.setContentTitle(surahnameIntented)
                 // .setContentText("Much longer text that cannot fit one line...")

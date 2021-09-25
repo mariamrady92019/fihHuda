@@ -7,14 +7,14 @@ import android.os.Build;
 
 import tool.mariam.fihhuda.R;
 
-public class ApplicationClass extends Application {
+public class App extends Application {
 
-   public static final String CHANNEL_ID = "natification_id";
+    public static final String CHANNEL_ID = "natification_id";
 
     @Override
     public void onCreate() {
         super.onCreate();
-         createNotificationChannel();
+        createNotificationChannel();
     }
 
     private void createNotificationChannel() {

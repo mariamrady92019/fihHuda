@@ -4,7 +4,7 @@
     package="tool.mariam.fihhuda">
 
     <application
-        android:name=".Base.ApplicationClass"
+        android:name=".Base.App"
         android:allowBackup="false"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"

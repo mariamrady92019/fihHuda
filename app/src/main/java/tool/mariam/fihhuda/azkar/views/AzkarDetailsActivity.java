@@ -25,13 +25,13 @@ public class AzkarDetailsActivity extends AppCompatActivity {
     private AzkarViewModel viewModel;
     String category;
     List<AzkarDataItem> azkar = new ArrayList<>();
+    public static String EXTRA_CATEGORY_NAME = "category_name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_azkar_details);
         viewModel = new ViewModelProvider(AzkarDetailsActivity.this).get(AzkarViewModel.class);
-         viewModel.setContext(this);
         initView();
         getDataIntented();
         getdataFromAzkarViewModel(category);
@@ -53,7 +53,7 @@ public class AzkarDetailsActivity extends AppCompatActivity {
     }
 
     private void getDataIntented() {
-        category = getIntent().getStringExtra("categoryName");
+        category = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
         categoryName.setText(category);
     }
 
