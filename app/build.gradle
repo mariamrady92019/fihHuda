@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.example.fihhuda"
-        minSdkVersion 16
+        applicationId "tool.mariam.fihhuda"
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -17,6 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 
@@ -33,8 +39,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
-
-
 
 
     //sdp lib and ssp
@@ -65,14 +69,13 @@ dependencies {
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     // implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     def lifecycle_versionn = "2.1.0"
 
     // ViewModel and LiveData
     // implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_versionn"
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
     implementation("com.google.guava:guava:29.0-android")
@@ -93,7 +96,15 @@ dependencies {
      //lifecycle service to use in service with observable
         implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
+
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
     // support lib for notification
      //   implementation "androidx.core:core:1.6.0"
 
+}
+repositories {
+    mavenCentral()
 }

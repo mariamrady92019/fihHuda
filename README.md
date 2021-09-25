@@ -26,4 +26,16 @@ It is a muslim application for reading and listening quran, reading Azkar.
 
                          
                          
+## Learned While Migration to Kotlin
+- "AGPBI: {"kind":"error","text":"Default interface methods are only supported starting with Android N (--min-api 24): Landroidx/core/internal/view/SupportMenuItem;setTooltipText(Ljava/lang/CharSequence;)Landroid/view/MenuItem;","sources":[{}],"tool":"D8"}"
+Solced by
 
+```
+ compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+```
+- 64K limit -> make `minSdk 21` so **multidex** is **enabled by default**.
+- large size images -> generate different images using [appicon](https://appicon.co/#image-sets)
