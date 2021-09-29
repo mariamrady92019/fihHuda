@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="tool.mariam.fihhuda">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:name=".Base.App"
         android:allowBackup="false"
@@ -42,6 +45,6 @@
             android:exported="true" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

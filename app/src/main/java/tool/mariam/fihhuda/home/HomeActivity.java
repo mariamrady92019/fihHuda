@@ -54,10 +54,10 @@ public class HomeActivity extends AppCompatActivity {
                         fragment = new AzkarFragment();
                         break;
                     }
-                    case R.id.navigation_ahadeeth: {
+                  /*  case R.id.navigation_ahadeeth: {
                         //  fragment =new AhadeethFragment();
                         break;
-                    }
+                    }*/
                     case R.id.navigation_tafseer: {
                         fragment = new TafseerFragment();
                         break;
