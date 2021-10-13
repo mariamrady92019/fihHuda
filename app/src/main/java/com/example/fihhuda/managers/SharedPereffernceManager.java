@@ -1,4 +1,4 @@
-package com.example.fihhuda.Base;
+package com.example.fihhuda.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -35,6 +35,10 @@
             android:textColor="@color/brown"
             android:fontFamily="@font/bhuth"
             android:padding="@dimen/_3sdp"
+            android:textIsSelectable="true"
+            android:enabled="true"
+            android:focusable="true"
+            android:longClickable="true"
             />
         <View
 

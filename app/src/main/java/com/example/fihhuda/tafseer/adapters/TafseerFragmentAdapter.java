@@ -40,7 +40,7 @@ public class TafseerFragmentAdapter extends RecyclerView.Adapter<TafseerFragment
               final SearchModel ayah = list.get(position);
               holder.suarname.setText(ayah.getSurahName());
 
-              holder.ayah.setText(ayah.getAyah().getText());
+              holder.ayah.setText(ayah.getAyah().getText()+"("+ayah.getAyah().getNum()+")");
 
               if (onAyahClickListener != null) {
                   holder.itemView.setOnClickListener(new View.OnClickListener() {

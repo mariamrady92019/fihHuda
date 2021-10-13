@@ -1,12 +1,10 @@
 package com.example.fihhuda.quran.views;
 
-import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,10 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.fihhuda.Base.BaseActivity;
-import com.example.fihhuda.Helper;
+import com.example.fihhuda.Base.Helper;
 import com.example.fihhuda.R;
-import com.example.fihhuda.SplahActivity;
-import com.example.fihhuda.home.HomeActivity;
 import com.example.fihhuda.quran.adapters.SurahDetailsAdapter;
 import com.example.fihhuda.quran.fullQuranReadingModels.Ayah;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;

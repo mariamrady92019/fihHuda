@@ -71,6 +71,10 @@
         android:padding="@dimen/_5sdp"
         android:textSize="@dimen/_15sdp"
         android:text="flmm kmcknckeeeeeeeen"
+        android:textIsSelectable="true"
+        android:enabled="true"
+        android:focusable="true"
+        android:longClickable="true"
 
         />
 

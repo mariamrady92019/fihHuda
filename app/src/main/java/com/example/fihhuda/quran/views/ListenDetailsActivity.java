@@ -1,46 +1,27 @@
 package com.example.fihhuda.quran.views;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.media.session.MediaSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.media.session.MediaControllerCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.media.session.MediaButtonReceiver;
 
-import com.example.fihhuda.Base.ApplicationClass;
 import com.example.fihhuda.Base.BaseActivity;
 import com.example.fihhuda.Base.Constants;
 import com.example.fihhuda.Base.ListeningService;
-import com.example.fihhuda.Base.NotificationBroadCastReceiver;
 import com.example.fihhuda.Base.NotificationCreator_Helper;
-import com.example.fihhuda.Base.SharedPereffernceManager;
-import com.example.fihhuda.ListenSrvicesManager;
+import com.example.fihhuda.managers.ListenSrvicesManager;
 import com.example.fihhuda.R;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;
-
-import okhttp3.internal.Util;
 
 public class ListenDetailsActivity extends BaseActivity implements View.OnClickListener , SeekBar.OnSeekBarChangeListener {
 
@@ -119,6 +100,8 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
            // intent.putExtra("url",audioUrl);
             //even if now i had name of sura so its not nessaccery to pass pos but after complition it will need it
             intent.putExtra("position",Constants.position);
+           // intent.putExtra("readerId",Constants.readerId);
+
             startService(intent); 
             //startNewSuraByButton(position);
         }
@@ -141,10 +124,14 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
 
                           progressCircular.setVisibility(View.VISIBLE);
 
-                        NotificationCreator_Helper.createNotifications(ListenDetailsActivity.this,surahnameIntented,getPackageName());
+                          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                              NotificationCreator_Helper.createNotifications(ListenDetailsActivity.this,surahnameIntented,getPackageName());
+                          }
                           Intent intent = new Intent(this, ListeningService.class);
                           //intent.putExtra("url",audioUrl);
                           intent.putExtra("position",Constants.position);
+                       //   intent.putExtra("readerId",Constants.readerId);
+
                           startService(intent);
                           isplayingimage = true;
                          // isPaused=false;
@@ -177,6 +164,8 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
             Intent intent = new Intent(this, ListeningService.class);
             // intent.putExtra("url",audioUrl);
             intent.putExtra("position",Constants.position);
+           // intent.putExtra("readerId",Constants.readerId);
+
             startService(intent);
 
         }
@@ -188,7 +177,7 @@ public class ListenDetailsActivity extends BaseActivity implements View.OnClickL
     private void getDataIntented() {
         Constants.position = getIntent().getIntExtra("position", -1);
         surahnameIntented = getIntent().getStringExtra("name");
-        readerId = getIntent().getIntExtra("shekh_id", 1);
+        Constants.readerId = getIntent().getIntExtra("shekh_id", 1);
         qareeName.setText(QuranFragment.shikh_name);
 
 

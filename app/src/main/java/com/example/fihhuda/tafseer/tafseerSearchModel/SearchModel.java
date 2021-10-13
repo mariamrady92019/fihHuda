@@ -7,6 +7,8 @@ public class SearchModel {
     String surahName;
     AyahsSearchItem ayah ;
 
+
+
     public SearchModel(String surahName, AyahsSearchItem ayah) {
         this.surahName = surahName;
         this.ayah = ayah;

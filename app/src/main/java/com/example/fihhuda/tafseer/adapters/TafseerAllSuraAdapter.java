@@ -1,5 +1,6 @@
 package com.example.fihhuda.tafseer.adapters;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,11 @@ public class TafseerAllSuraAdapter extends RecyclerView.Adapter<TafseerAllSuraAd
     List<AyahsItem> AyatFortafseer;
     List<Ayah> tafseerOfAya;
 
+    private int highlightItem = 0;
+
+    public void toggleSelection(int pos) {
+        this.highlightItem = pos;
+    }
 
     public TafseerAllSuraAdapter(List<AyahsItem>AyatFortafseer, List<Ayah> tafseerOfAya) {
         this.tafseerOfAya= tafseerOfAya;
@@ -36,11 +42,25 @@ public class TafseerAllSuraAdapter extends RecyclerView.Adapter<TafseerAllSuraAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TafseerFragmentAdapterViewHolde holder, int position) {
+    public void onBindViewHolder(@NonNull final  TafseerFragmentAdapterViewHolde holder, final int position) {
 
-             holder.suarname.setText(this.tafseerOfAya.get(position).getText());
+             holder.suarname.setText(this.tafseerOfAya.get(position).getText()+
+                     "("+this.tafseerOfAya.get(position).getNumberInSurah()+")");
              holder.ayah.setText( this.AyatFortafseer.get(position).getText());
 
+        if (position == highlightItem) {
+            holder.itemView.setSelected(true);
+            holder.itemView.setBackgroundResource(R.color.highlight);
+
+            holder.itemView.postDelayed(new Runnable(){
+                public void run(){
+                    holder.itemView.setBackgroundResource(R.drawable.whiteborder);
+
+                }
+            },2000);
+        } else {
+            holder.itemView.setSelected(false);
+        }
 
 
     }

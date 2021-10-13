@@ -15,15 +15,15 @@
         android:background="@color/colorPrimaryDark"
         >
 
-        <SearchView
+        <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/whiteborder"
             android:hint="ابحث عن آية"
             android:fontFamily="@font/bukraregular"
-            android:padding="5dp"
+            android:padding="@dimen/_8sdp"
             app:layout_constraintStart_toStartOf="parent"
             />
 

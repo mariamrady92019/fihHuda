@@ -2,10 +2,13 @@ package com.example.fihhuda.tafseer.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -27,10 +30,10 @@ import com.example.fihhuda.tafseer.tafseerSearchModel.forTafseerReadingInActivit
 
 import java.util.List;
 
-public class TafseerFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class TafseerFragment extends Fragment implements TextWatcher {
 
 
-    protected SearchView searchBar;
+    protected EditText searchBar;
     protected Toolbar toolbar;
     protected RecyclerView searchRecycler;
     private View rootView;
@@ -75,13 +78,19 @@ public class TafseerFragment extends Fragment implements SearchView.OnQueryTextL
     }
 
     private void onItemClick() {
+        Log.e("click","on item click");
+
         adapter.setOnAyahClickListener(new TafseerFragmentAdapter.onAyahClickListener() {
             @Override
             public void onAyahClick(SearchModel model) {
                 //start activity for tafseer reading
                 //scroll to the position
+                Log.e("click","set on click");
+
                 Intent intent = new Intent(getActivity(),TafseerDetailsForAllSura.class);
                 intent.putExtra("suraName",model.getSurahName());
+                intent.putExtra("ayaNumber",model.getAyah().getNum());
+
                 startActivity(intent);
               }
         });
@@ -89,30 +98,32 @@ public class TafseerFragment extends Fragment implements SearchView.OnQueryTextL
 
 
     private void initView(View rootView) {
-        searchBar = (SearchView) rootView.findViewById(R.id.search_bar);
+        searchBar = (EditText) rootView.findViewById(R.id.search_bar);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         searchRecycler = (RecyclerView) rootView.findViewById(R.id.search_Recycler);
-        searchBar.setOnQueryTextListener(this);
+        searchBar.addTextChangedListener(this);
+    }
+
+
+
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.e("submit",query);
-        List<SearchModel> list= viewModel.getSearchedForByWord(query);
-        Log.e("submit",list.get(0).getAyah()+"");
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        Log.e("submit",s+"");
+        List<SearchModel> list= viewModel.getSearchedForByWord(s+"");
+        // Log.e("submit",list.get(0).getAyah()+"");
 
         initSearchRecycler(list);
-
-     return false;
     }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-       String word_searchFor=newText;
-        Log.e("ch",newText);
-
-        return false;
-    }
-
-
 }

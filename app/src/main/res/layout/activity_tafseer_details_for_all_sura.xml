@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".tafseer.views.TafseerDetailsForAllSura">
 
-    <androidx.appcompat.widget.Toolbar
+  <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,17 +15,17 @@
         android:background="@color/colorPrimaryDark"
         >
 
-        <EditText
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/whiteborder"
-            android:hint="اذهب الي سورة.."
-            android:fontFamily="@font/bukraregular"
-            android:padding="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+       <TextView
+           android:id="@+id/search_bar"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textColor="@color/white"
+           android:text="ncjdbcbjjcbb"
+           android:gravity="center"
+           android:textSize="@dimen/_18ssp"
+           android:fontFamily="@font/bukraregular"
+           />
+
 
     </androidx.appcompat.widget.Toolbar>
 

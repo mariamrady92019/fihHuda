@@ -12,5 +12,6 @@
     <color name="black">#0C0C0C</color>
     <color name="brown">#551906</color>
 
+    <color name="highlight">#E2E5EA</color>
 
 </resources>

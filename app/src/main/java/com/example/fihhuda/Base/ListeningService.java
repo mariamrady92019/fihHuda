@@ -13,18 +13,11 @@ import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.example.fihhuda.ListenSrvicesManager;
-import com.example.fihhuda.quran.fullQuranReadingModels.FullQuran;
-import com.example.fihhuda.quran.views.ListenDetailsActivity;
+import com.example.fihhuda.managers.ListenSrvicesManager;
+import com.example.fihhuda.managers.SharedPereffernceManager;
 import com.example.fihhuda.quran.viewsModel.ListeningViewModel;
-import com.google.gson.Gson;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
 
 import static com.example.fihhuda.quran.views.ListenDetailsActivity.progressCircular;
 
@@ -168,7 +161,7 @@ public class ListeningService extends LifecycleService implements MediaPlayer.On
 
        // progressCircular.setVisibility(View.VISIBLE);
        //get url in view model by retrofit
-        listeningViewModel.getListeningDataBId_SuraName(9,soraRenamed);
+        listeningViewModel.getListeningDataBId_SuraName(Constants.readerId,soraRenamed);
 
        // listeningMediaPlayer.setOnPreparedListener(this);
            updateSharedPreferences(sorahName,position);
