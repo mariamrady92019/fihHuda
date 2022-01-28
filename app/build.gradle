@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     defaultConfig {
-        applicationId "com.example.fihhuda"
-        minSdkVersion 16
-        targetSdkVersion 29
+        applicationId "tool.mariam.fihhuda"
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,6 +21,10 @@ android {
 
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 
 }
@@ -35,8 +41,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
 
 
-
-
     //sdp lib and ssp
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
@@ -49,30 +53,29 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
 
-    def lifecycle_version = "2.2.0"
+    def lifecycle_version = "2.3.1"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     // Lifecycles only (without ViewModel or LiveData)
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
-    // Annotation processor
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+   /* // Annotation processor
+   //  kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler
-    // implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+*/
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     def lifecycle_versionn = "2.1.0"
 
     // ViewModel and LiveData
     // implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_versionn"
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
     implementation("com.google.guava:guava:29.0-android")
@@ -90,10 +93,21 @@ dependencies {
     implementation 'com.flipboard:bottomsheet-core:1.5.3'
     implementation 'com.flipboard:bottomsheet-commons:1.5.3' // optional
 
-     //lifecycle service to use in service with observable
-        implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    //lifecycle service to use in service with observable
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // support lib for notification
-     //   implementation "androidx.core:core:1.6.0"
+    //   implementation "androidx.core:core:1.6.0"
 
+}
+repositories {
+    mavenCentral()
 }

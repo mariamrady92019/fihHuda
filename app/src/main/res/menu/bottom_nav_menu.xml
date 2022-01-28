@@ -8,10 +8,10 @@
         android:id="@+id/navigation_azkar"
         android:icon="@drawable/azkar"
         android:title="@string/azkar" />
-    <item
+ <!--   <item
         android:id="@+id/navigation_ahadeeth"
         android:icon="@drawable/ahadeeth"
-        android:title="@string/ahadeeth" />
+        android:title="@string/ahadeeth" />-->
     <item
         android:id="@+id/navigation_tafseer"
         android:icon="@drawable/tafseer"
