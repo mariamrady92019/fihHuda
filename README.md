@@ -2,7 +2,6 @@
 
 It is a muslim application for reading and listening quran, reading Azkar [google play link](https://play.google.com/store/apps/details?id=tool.mariam.fihhuda)
 
-
 # Which tools Used :
 * Material Design
 * MVVM architecture Pattern
@@ -16,7 +15,6 @@ It is a muslim application for reading and listening quran, reading Azkar [googl
 * bottom navigation to move between fragments
 * custom bottomSheet
                        
-
 
 ## Now lets go to see our Application !
 
